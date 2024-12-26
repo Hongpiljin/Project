@@ -1005,9 +1005,12 @@ KH 2조
 		values(FILE_NUMBER_SEQ.nextval, #{postNumber}, #{filePath}, #{fileName})
 	</insert>
 ```
-https://www.erdcloud.com/d/XjJBCsozqDjq62vTo
+>### 프로젝트 초기 ERD 
+
+- ERD<br>
+  - (https://www.erdcloud.com/d/XjJBCsozqDjq62vTo)<br>
 ![image](https://github.com/user-attachments/assets/eb236cae-d796-434f-a4c7-5397cb4596ee)
-ERD 
+
 
 
 >## 6. 프로젝트 소감 및 향후 계획
