@@ -1005,6 +1005,11 @@ KH 2조
 		values(FILE_NUMBER_SEQ.nextval, #{postNumber}, #{filePath}, #{fileName})
 	</insert>
 ```
+https://www.erdcloud.com/d/XjJBCsozqDjq62vTo
+![image](https://github.com/user-attachments/assets/eb236cae-d796-434f-a4c7-5397cb4596ee)
+ERD 
+
+
 >## 6. 프로젝트 소감 및 향후 계획
 - 이현성 : 프로젝트를 진행하며 클라이언트와 서버 간 상호작용에 대해 깊이 이해하게 되었고, 각각의 코드와 함수가 가진 장단점을 명확히 알 수 있었습니다.
 	또한, 사용자 입장에서 고민하고 설계하는 과정을 통해 사용자 경험의 중요성을 더욱 실감하게 되었으며, 이를 기반으로 팀원들과 소통하는 것의 중요성도 깊이 느낄 수 있었습니다.
