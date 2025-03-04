@@ -1,98 +1,68 @@
-팀장 이현성
+# KH2조 Final_Project
+## 팀 소개
+### 1. 팀 이름 
+KH 결사대 
 
-팀원 이민, 장호진, 홍필진,김창수
+### 2. 팀원 
+- 팀장: 이현성 
+- 팀원:
+ - 이민 
+ - 장호진 
+ - 홍필진
+ - 김창수
 
-제목: 자동차 웹사이트
+ ><h2>목차</h2>
+ <h3>1. 프로젝트 소개</h3>
+ <ul>
+    <li>기획 의도</li>
+    <li>목표</li>
+ </ul>
+ <h3>2. 개발 환경</h3>
+ <ul>
+  <li>언어</li>
+  <li>개발 툴</li>
+  <li>프레임워크 및 라이브러리</li>
+  <li>API</li>
+ </ul>
+ <h3>3. 개발 일정</h3>
+ <h3>4. 주요 기능</h3>
+ <h3>5. 화면 및 코드 리뷰<h3>
+ <h3>6. 프로젝트 소감 및 향후 계획</h3>
+ <ul>
+  <li>소감</li>
+  <li>향후 계획</li>
+ </ul>
+ <h3>7. Q & A</h3>
 
+>## 1. 프로젝트 소개
+>### 기획 의도
+- 차량 용품, 차량렌트, 중고차구매가 가능한 사용자가 편리한 사이트
 
-개요
-저희 사이트는 중고차와 렌터카, 자동차 관련 용품 판매를 한 번에 할 수 있는 페이지입니다.
-
-구현기능
-
-이현성
-	
-로그인/카카오 로그인 및 로그아웃, 회원가입, ID/PW 찾기, 이메일 인증, 주소 검색,
-마이페이지 (포인트 충전, 구매 내역 및 렌트카 예약 내역 확인, 프로필 수정, 회원 탈퇴
-
-이민
-
-쇼핑몰 페이지 (상품 목록 & 필터링)
-상품 상세 페이지 (상품 정보 표시, 장바구니 추가 기능,바로 구매 기능)
-장바구니 기능(조회, 수량, 내역 저장)
-결제 기능(포인트 결제 지원, 재고 감소처리, 트랜젝션 관리, 결제 내역저장)
-결제 내역(명세서) 조회
-쇼핑몰 관리자(데이터 삽입,수정,삭제,조회,검색) 
-
-
-장호진
-
-렌트카 관리자(데이터 삽입,수정,삭제,조회,검색) 
-렌트카 페이지 (상품 목록 출력)
-렌트카 상세 페이지 (렌트카 정보 표시, 렌트카 예약 및 결제)
-예약기능(포인트 결제 지원, 결제/예약 내역 저장)
-
-
-홍필진
-
-중고차 페이지 ( 상품 목록 & 필터링 & 페이징 ) 
-중고차 상세 페이지 ( 상품 상세정보 표시 , 차량 설명 에디터 , 결제 기능 ) 
-결제 기능 ( 차량 결제완료시 숨김처리 , 트랜젝션 관리 , 결제내역 저장 ) 
-중고차 관리자 (데이터 삽입 , 수정 , 삭제 , 조회 , 검색 )
-전국 직영점 ( 각 매장 지역별 차량조회 , map 사용 ) 
-
-
-김창수
-
-고객센터 (메뉴얼 및 문의 게시판) 
-
-
-설계의 주안점
-카카오 로그인을 포함한 간편 로그인 기능 지원
-JWT 기반의 인증 및 인가 시스템 적용
-비밀번호 암호화(Bcrypt) 및 이메일 인증을 통한 보안 강화
-프론트엔드는 React를 활용하여 유지보수가 용이한 구조로 개발
-base64를 사용한 이미지 저장
-localStorage를 이용한 장바구니 데이터 저장
-포인트 충전을 통해 사이트 내 구매 편의
-tiptap editor 사용 
-kakao map 을 사용한 위치정보 
-
-더 적고 싶은거 계시면 적어주세요
-
-사용기술 및 개발환경
-
-OS : Windows
-DB : Oracle
-FrontEnd : html5/css/javascrpit
-BackEnd : Java/Spring/MyBatis
-Editor : VS code / Oracle SQL Deceloper
-VCS : GitHub
-
-
-BackEnd
-
-프레임 워크 :
-Spring Boot
-Spring Security
-MyBatis
-
-라이브러리 :
-Lombok
-Oracle JDBC
-JWT
-Tomcat
-
-FrontEnd
-
-프레임 워크:
-axios
-react
-react-dom
-react-router-dom
-redux
-
-라이브러리 :
-@reduxjs/toolkit
-axios
-redux-persist
+>### 목표
+- 차량 용품, 차량렌트, 중고차구매
+- 차량을 구매하며, 기타 필요한 차량용품까지 한번에 구매가능
+  
+>## 2. 개발 환경
+>### 사용 언어
+- OS : Windows
+- DB : Oracle
+- FrontEnd : html5/css/javascrpit
+- BackEnd : Java/Spring/MyBatis
+- Editor : VS code / Oracle SQL Deceloper
+- VCS : GitHub
+>### 개발 툴
+- axios
+- react
+- react-dom
+- react-router-dom
+- redux
+>### 프레임워크 및 라이브러리
+- @reduxjs/toolkit
+- axios
+- redux-persist
+- Lombok
+- Oracle JDBC
+- JWT
+- Tomcat
+>### 사용 API
+- 카카오맵 API (지도 및 위치 정보 제공)
