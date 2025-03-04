@@ -1,0 +1,114 @@
+/* html, body 기본 설정: 여백 제거 + 전체 높이 사용 + 배경 검정 */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #000; /* 전체 배경 검정 */
+  }
+  
+  /* 전체 컨테이너 */
+  .dealer-container {
+    min-height: 100vh; /* 화면 전체 높이 확보 */
+    padding: 20px;
+    background-color: #000; /* 배경 검정 (html/body와 동일) */
+    font-family: sans-serif;
+  }
+  
+  /* 제목 */
+  .dealer-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff; /* 검정 배경이므로 제목 글자색 흰색으로 */
+  }
+  
+  /* 그리드 레이아웃: 가변 컬럼 */
+  .dealer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px; /* 카드 간 간격 */
+  }
+  
+  /* 카드 */
+  .dealer-card {
+    background-color: #111; /* 카드 배경: 짙은 회색(검정에 가까움) */
+    border: 1px solid #333; /* 테두리: 더 밝은 검정/회색 */
+    border-radius: 6px;
+    display: flex;          /* 이미지와 텍스트를 가로로 배치 */
+    padding: 10px;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1); /* 약간의 흰 그림자 */
+    color: #fff; /* 카드 내부 글자색 흰색 */
+  }
+  
+  /* 이미지 */
+  .dealer-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 15px;
+  }
+  
+  /* 카드 오른쪽 텍스트 영역 */
+  .dealer-info {
+    flex: 1; /* 남은 공간 차지 */
+  }
+  
+  /* 지역명 */
+  .dealer-region {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #fff; /* 흰색 */
+  }
+  
+  /* 전화번호 */
+  .dealer-phone {
+    margin: 5px 0;
+    color: #ccc; /* 조금 더 연한 흰색 */
+    font-size: 0.95rem;
+  }
+  
+  /* 차량 대수 */
+  .dealer-count {
+    margin: 5px 0;
+    color: #ff9999; /* 강조 색상 (밝은 빨강) */
+    font-weight: bold;
+  }
+  
+  /* 주소 */
+  .dealer-address {
+    margin: 5px 0;
+    color: #ccc;
+    font-size: 0.9rem;
+  }
+  
+  /* 버튼 */
+  .dealer-button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: #ff5c5c;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .dealer-button:hover {
+    background-color: #e14e4e;
+  }
+  
+  /* 반응형: 화면이 작아지면 카드 레이아웃이 자동으로 줄어듦 */
+  @media (max-width: 600px) {
+    .dealer-card {
+      flex-direction: column; /* 이미지와 텍스트 세로 배치 */
+      align-items: flex-start;
+    }
+    .dealer-image {
+      width: 100%;
+      height: auto;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+  

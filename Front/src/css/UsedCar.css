@@ -1,0 +1,504 @@
+/* 전체 배경 */
+.used-car-board {
+  background-color: #000;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* 화면 전체 높이 보장 */
+}
+
+
+/* 메인 배너 */
+.main-banner img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+}
+
+/* 헤더 */
+.used-car-board-header {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 1200px;
+  background-color: #000;
+  
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.search-input {
+  padding: 10px;       /* 안쪽 여백(패딩) 적당히 줄이기 */
+  width: 500px;        /* 원하는 만큼 늘린다 (예: 400px) */
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.search-button {
+  padding: 10px 15px;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.car-count {
+  margin-top: 10px;
+}
+
+
+/* ⭐ main-content100: 좌우 배치 (필터 + 차량 목록) */
+.main-content100 {
+display: flex;
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
+padding-top: 20px;
+gap: 20px; /* 필터와 목록 사이 간격 */
+}
+
+
+/* ⭐ main-content100: 좌우 배치 (필터 + 차량 목록) */
+.main-content100 {
+display: flex;
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
+padding-top: 20px;
+gap: 20px; /* 필터와 목록 사이 간격 */
+}
+
+/* 왼쪽 필터 영역 */
+.filter-container {
+/* position: absolute;  <-- 제거 */
+/* top: 450px;          <-- 제거 */
+/* left: 130px;         <-- 제거 */
+width: 200px;          /* 원하는 너비 */
+background-color: #111;
+padding: 20px;
+border-radius: 8px;
+box-sizing: border-box;
+/* filter-container 안에 used-car-filter 스타일은 그대로 */
+}
+
+
+/* 필터 박스: 컨테이너를 꽉 채우도록 설정 */
+.used-car-filter {
+  background-color: #111;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;  /* 항목이 많을 때 자동 줄바꿈 */
+  justify-content: space-between; /* 요소를 고르게 배치 */
+  gap: 10px;  /* 요소들 간 간격 */
+  box-sizing: border-box;
+}
+
+
+/* 드롭다운 공통 스타일 */
+.used-car-filter .dropdown {
+  position: relative;
+  display: flex; /* 가로 배치 */
+  align-items: center; /* 수직 정렬 */
+  gap: 10px; /* 간격 추가 */
+  width: 100%;
+}
+
+.used-car-filter .dropdown-toggle {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  width: 100%;
+}
+
+.used-car-filter .dropdown-toggle .arrow {
+  margin-left: 5px;
+  transition: transform 0.3s;
+}
+
+.used-car-filter .dropdown-toggle .arrow.open {
+  transform: rotate(180deg);
+}
+
+.used-car-filter .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+  z-index: 999;
+  min-width: 120px;
+}
+
+.used-car-filter .dropdown-menu .dropdown-item {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.used-car-filter .dropdown-menu .dropdown-item:hover {
+  background-color: #444;
+}
+
+
+/* 차량 목록(오른쪽) */
+.content {
+  flex: 1; /* 나머지 공간 사용 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 차량 리스트 그리드 */
+.car-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* ✅ 4열 고정 */
+  column-gap: 10px; /* ✅ 가로 간격 */
+  row-gap: 15px; /* ✅ 세로 간격 */
+  width: 100%;
+  max-width: 1200px; /* ✅ 전체 컨테이너 크기 조정 */
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* 차량 카드 */
+.car-card {
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  transition: transform 0.2s ease-in-out;
+  text-align: left;
+  width: 100%;
+  max-width: 280px;
+  min-height: 300px;  /* 카드의 최소 높이 지정 */
+}
+/* dummy 카드 스타일 추가 */
+.car-card.dummy-card {
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px dashed #444;  /* 혹은 투명하게 설정: background-color: transparent; */
+  min-height: 300px;        /* 실제 카드와 동일한 높이 */
+  background-color: transparent; /* 필요에 따라 조정 */
+}
+.car-card:hover {
+  transform: scale(1.05);
+}
+
+.car-card img {
+  width: 100%; /* ✅ 부모 크기에 맞추기 */
+  height: 180px; /* ✅ 이미지 높이 고정 */
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* 페이징 버튼 기본 스타일 */
+.pagination-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #ff0000; /* 🔴 빨간색 버튼 */
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+/* 현재 페이지 버튼 스타일 */
+.pagination-button.active {
+  background-color: #888; /* 현재 페이지는 회색 */
+  cursor: not-allowed;
+}
+
+/* 버튼 비활성화 스타일 */
+.pagination-button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
+/* 버튼 호버 효과 */
+.pagination-button:hover:not(:disabled) {
+  background-color: #cc0000;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .car-list {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  /* 모바일에서 필터와 목록을 세로 배치 */
+  .main-content100 {
+    flex-direction: column;
+  }
+  .filter-container {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  .car-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(200px, 1fr));
+      column-gap: 1px; /* ✅ 가로 간격 */
+      row-gap: 5px; /* ✅ 세로 간격 */
+      width: 100%;
+      margin: 0 auto;
+      justify-content: center;
+  }
+}
+/* 전체 배경 */
+.used-car-board {
+  background-color: #000;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* 화면 전체 높이 보장 */
+}
+
+
+/* 메인 배너 */
+.main-banner img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+}
+
+/* 헤더 */
+.used-car-header {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 1200px;
+  
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.search-input {
+  padding: 10px;
+  width: 250px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.search-button {
+  padding: 10px 15px;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.car-count {
+  margin-top: 10px;
+}
+
+
+/* ⭐ main-content100: 좌우 배치 (필터 + 차량 목록) */
+.main-content100 {
+display: flex;
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
+padding-top: 20px;
+gap: 20px; /* 필터와 목록 사이 간격 */
+}
+
+
+/* ⭐ main-content100: 좌우 배치 (필터 + 차량 목록) */
+.main-content100 {
+display: flex;
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
+padding-top: 20px;
+gap: 20px; /* 필터와 목록 사이 간격 */
+}
+
+/* 왼쪽 필터 영역 */
+.filter-container {
+/* position: absolute;  <-- 제거 */
+/* top: 450px;          <-- 제거 */
+/* left: 130px;         <-- 제거 */
+width: 200px;          /* 원하는 너비 */
+background-color: #111;
+padding: 20px;
+border-radius: 8px;
+box-sizing: border-box;
+/* filter-container 안에 used-car-filter 스타일은 그대로 */
+}
+
+
+/* 필터 박스 */
+.used-car-filter {
+  background-color: #111;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row; /* 세로 -> 가로로 변경 */
+  flex-wrap: wrap;     /* 항목이 많을 때 자동 줄바꿈 */
+  gap: 15px;
+  box-sizing: border-box;
+}
+
+/* 드롭다운 공통 스타일 */
+.used-car-filter .dropdown {
+  position: relative;
+}
+
+.used-car-filter .dropdown-toggle {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.used-car-filter .dropdown-toggle .arrow {
+  margin-left: 5px;
+  transition: transform 0.3s;
+}
+.used-car-filter .dropdown-toggle .arrow.open {
+  transform: rotate(180deg);
+}
+
+.used-car-filter .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+  z-index: 999;
+  min-width: 120px;
+}
+
+.used-car-filter .dropdown-menu .dropdown-item {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+.used-car-filter .dropdown-menu .dropdown-item:hover {
+  background-color: #444;
+}
+
+/* 차량 목록(오른쪽) */
+.content {
+  flex: 1; /* 나머지 공간 사용 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 차량 리스트 그리드 */
+.car-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px)) !important; /* ✅ 카드 너비 줄이기 */
+  column-gap: 5px !important; /* ✅ 가로 간격 */
+  row-gap: 5px !important; /* ✅ 세로 간격 */
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* 차량 카드 */
+.car-card {
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  transition: transform 0.2s ease-in-out;
+  text-align: left;
+  width: 100%;
+  max-width: 250px; /* ✅ 카드 크기 조절 */
+}
+.car-card:hover {
+  transform: scale(1.1);
+}
+
+.car-card img {
+  width: 100%; /* ✅ 부모 크기에 맞추기 */
+  height: auto;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* 페이지네이션 */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .car-list {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  /* 모바일에서 필터와 목록을 세로 배치 */
+  .main-content100 {
+    flex-direction: column;
+  }
+  .filter-container {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  .car-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(200px, 1fr));
+      column-gap: 1px; /* ✅ 가로 간격 */
+      row-gap: 5px; /* ✅ 세로 간격 */
+      width: 100%;
+      margin: 0 auto;
+      justify-content: center;
+  }
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rental.mapper.UsedCarImageMapper">
+
+    <!-- 특정 차량의 이미지 목록 조회 -->
+    <select id="getUsedCarImageByVehicleNo" parameterType="String" resultType="com.rental.dto.UsedCarImageDTO">
+  SELECT VEHICLE_NO, IMAGE_DATA, MAIN_IMAGE_STATUS
+  FROM USED_CAR_IMAGE
+  WHERE VEHICLE_NO = #{vehicleNo}
+    </select>
+
+    <!-- 새로운 이미지 추가 -->
+<insert id="insertUsedCarImage" parameterType="com.rental.dto.UsedCarImageDTO">
+    INSERT INTO USED_CAR_IMAGE (IMAGE_ID, VEHICLE_NO, IMAGE_DATA)
+    VALUES (
+      USED_CAR_IMAGE_SEQ.NEXTVAL,
+      #{vehicleNo, jdbcType=VARCHAR},
+      #{imageData, jdbcType=BLOB}
+    )
+</insert>
+
+     <!-- 특정 이미지 데이터(BLOB)를 기준으로 삭제 -->
+    <delete id="deleteImageByData">
+        DELETE FROM USED_CAR_IMAGE WHERE IMAGE_DATA = #{imageData}
+    </delete>
+
+    <!-- 기존 대표 이미지를 'N'으로 업데이트 -->
+    <update id="updateMainImageStatusByVehicleNo">
+        UPDATE USED_CAR_IMAGE
+        SET MAIN_IMAGE_STATUS = 'N'
+        WHERE VEHICLE_NO = #{vehicleNo} AND MAIN_IMAGE_STATUS = 'Y'
+    </update>
+
+     <!-- 새로운 대표 이미지를 'Y'로 설정 -->
+    <update id="setNewMainImage">
+        UPDATE USED_CAR_IMAGE
+        SET MAIN_IMAGE_STATUS = 'Y'
+        WHERE VEHICLE_NO = #{vehicleNo} AND IMAGE_DATA = #{imageData}
+    </update>
+
+
+     <!-- 차량 삭제 시 해당 차량의 이미지 삭제 -->
+    <delete id="deleteImagesByVehicleNo">
+        DELETE FROM USED_CAR_IMAGE WHERE VEHICLE_NO = #{vehicleNo}
+    </delete>
+
+    <select id="getImagesByVehicleNo" parameterType="String" resultType="com.rental.dto.UsedCarImageDTO">
+    SELECT IMAGE_ID, VEHICLE_NO, IMAGE_DATA, MAIN_IMAGE_STATUS
+    FROM USED_CAR_IMAGE
+    WHERE VEHICLE_NO = #{vehicleNo}
+</select>
+
+    <delete id="deleteImageById" parameterType="java.lang.Long">
+     DELETE FROM USED_CAR_IMAGE WHERE IMAGE_ID = #{imageId}
+    </delete>
+</mapper>

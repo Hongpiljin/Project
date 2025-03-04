@@ -1,0 +1,157 @@
+/* 전체 페이지 스타일 */
+.container {
+    width: 1200px;
+    height: 1200px;
+    position: relative;
+    background: #000000; /* black */
+  }
+  
+  /* 회원가입 제목 */
+  .title {
+    width: 190px;
+    height: 60px;
+    position: absolute;
+    left: 505px;
+    top: 210px;
+    text-align: center;
+    color: #FFFFFF; /* white */
+    font-size: 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  /* 하단 이용약관 및 링크 */
+  .footer {
+    width: 700px;
+    height: 100px;
+    position: absolute;
+    left: 250px;
+    top: 1035px;
+  }
+  
+  .footer .links {
+    width: 700px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    text-align: center;
+  }
+  
+  .footer .links span {
+    color: #8D8D8D; /* Gray */
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+  }
+  
+  .footer .links .highlight {
+    font-weight: 700;
+    color: #FF5733; /* 주황색 */
+  }
+  
+  /* 입력 필드 박스 */
+  .input-box {
+    width: 450px;
+    height: 668px;
+    position: absolute;
+    left: 378px;
+    top: 305px;
+    background: rgba(217, 217, 217, 0);
+    border-radius: 15px;
+    border: 1px solid #8D8D8D; /* Gray */
+  }
+  
+  /* 각 입력 필드 스타일 */
+  .input-field {
+    width: 300px;
+    height: 123px;
+    position: absolute;
+    left: 450px;
+    top: 348px;
+  }
+  
+  .input-field .label {
+    width: 120px;
+    height: 28.75px;
+    position: absolute;
+    color: #8D8D8D; /* Gray */
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  .input-field .input {
+    width: 300px;
+    height: 1.15px;
+    position: absolute;
+    background: #8D8D8D; /* Gray */
+    border-radius: 5px;
+  }
+  
+  /* 버튼 */
+  .submit-btn {
+    width: 300px;
+    height: 45px;
+    position: absolute;
+    left: 433.33px;
+    top: 864px;
+    background: #FF0000; /* 빨간색 */
+    border-radius: 15px;
+  }
+  
+  .submit-btn-text {
+    width: 333.33px;
+    height: 41.18px;
+    position: absolute;
+    left: 0;
+    top: 3.44px;
+    text-align: center;
+    color: #FFFFFF; /* white */
+    font-size: 35px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  /* 상단 메뉴 */
+  .menu {
+    width: 1200px;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #000000; /* black */
+  }
+  
+  .menu .home-btn,
+  .menu .used-car-btn,
+  .menu .rental-btn {
+    width: 120px;
+    height: 50px;
+    position: absolute;
+    top: 50px;
+    background: #D9D9D9; /* Light Gray */
+    text-align: center;
+    color: #FFFFFF; /* white */
+    font-size: 26px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  .menu .home-btn {
+    left: 20px;
+  }
+  
+  .menu .used-car-btn {
+    left: 176px;
+  }
+  
+  .menu .rental-btn {
+    left: 476px;
+    background: #FAF6F6; /* 더 밝은 회색 */
+  }
+  
