@@ -37,7 +37,7 @@ const UsedCarBoard = () => {
     order: "asc",
   });
 
-  // 🚗 정렬 옵션
+  //  정렬 옵션
   const sortOptions = [
     { label: "전체 보기", value: "default" },
     { label: "적은 주행거리 순", value: "car_km_asc" },
