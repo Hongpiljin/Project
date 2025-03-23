@@ -502,7 +502,8 @@ KH 결사대
      ORDER BY UC.VEHICLE_NO ASC, UCI.IMAGE_ID ASC
 </select>
    7. 차량 관리자 목룍열고 차량명 , 차량번호 둘다 입력 후 검색했을때 ![image](https://github.com/user-attachments/assets/c6b703c9-97ae-4481-ad26-9feb42084b02)
-   8. 차량 관리자 새 차량 등록 ![image](https://github.com/user-attachments/assets/b0989d35-9b4b-444a-8994-3e45ee66e968)
+   8. 차량 관리자 새 차량 등록 ![image](https://github.com/user-attachments/assets/20c8d3bc-ce40-40c4-8487-4eb391f8d748) 
+
    9. 차량 게시판 화면 ![image](https://github.com/user-attachments/assets/42b1f42c-661a-48f4-85d9-d8fb73e5a04c)
    10. 차량 게시판에서 특정차량 검색 필터 기본값 적은 주행거리순 ![image](https://github.com/user-attachments/assets/6c0aaa17-0072-4bdf-af6f-5aa8cc827dff)
    11. 차량 게시판에서 특정 차량 검색 필터 낮은가격순 , 카테고리 변경 ![image](https://github.com/user-attachments/assets/900325d3-c610-4e50-abf3-ba37624ae692)
