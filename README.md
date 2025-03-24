@@ -482,25 +482,25 @@ KH 결사대
 - TipTap Editor 활용
 - Kakao Map API를 사용한 위치 정보 제공
 
-- 구현 화면
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------구현화면
 -  1. 관리자 대시보드  ![image](https://github.com/user-attachments/assets/0704629b-170d-4081-89e1-21f3299fe8b5)
-	Front : https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminDashboard.js 
+	-Front : https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminDashboard.js 
    3. 차량 관리자 목록 열고 화면![image](https://github.com/user-attachments/assets/cc4c0bff-5b8e-48ec-845b-88ba8d940628)
-      	Front : https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminUsedCar.js
-  	Back  :https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/AdminUsedCarController.java
+      	-Front : https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminUsedCar.js
+  	-Back  :https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/AdminUsedCarController.java
    5. 차량 관리자 목록열고 차량명만 넣고 검색했을때 ![image](https://github.com/user-attachments/assets/36cf74b0-003b-4c3d-b50b-0eaa4aad611f)
-	    <!-- ADMIN PAGE 중고차 목록 조회 -->
-<select id="getAllUsedCars" parameterType="map" resultMap="UsedCarResultMap">
-    SELECT UC.*,
-           COALESCE(UCI.IMAGE_ID, 0) AS IMAGE_ID,
-           UCI.IMAGE_DATA,
-           UCI.MAIN_IMAGE_STATUS
-      FROM USED_CAR UC
-      LEFT JOIN USED_CAR_IMAGE UCI 
-             ON UC.VEHICLE_NO = UCI.VEHICLE_NO
-     WHERE UC.STATUS = 0
-     ORDER BY UC.VEHICLE_NO ASC, UCI.IMAGE_ID ASC
-</select>
+	-SQL  <!--ADMIN 중고차목록에서 차량이름,차량번호로 검색 -->
+   <select id="searchUsedCars" resultType="com.rental.dto.UsedCarDTO">
+    SELECT * 
+    FROM used_car
+    WHERE 1=1
+    <if test="vehicleName != null and vehicleName != ''">
+        AND vehicle_name LIKE CONCAT(#{vehicleName}, '%') 
+    </if>
+    <if test="vehicleNo != null and vehicleNo != ''">
+        AND vehicle_no LIKE CONCAT(#{vehicleNo}, '%')
+    </if>
+   </select>
    7. 차량 관리자 목룍열고 차량명 , 차량번호 둘다 입력 후 검색했을때 ![image](https://github.com/user-attachments/assets/c6b703c9-97ae-4481-ad26-9feb42084b02)
    8. 차량 관리자 새 차량 등록
    ![image](https://github.com/user-attachments/assets/b3d0a150-d309-473c-a42c-e169052580eb)
