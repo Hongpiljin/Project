@@ -502,8 +502,11 @@ KH 결사대
     </if>
    </select>
    7. 차량 관리자 목룍열고 차량명 , 차량번호 둘다 입력 후 검색했을때 (https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)
-   8. ![차량 등록 화면](https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)
-   9.  ![image](https://github.com/user-attachments/assets/c029a91e-ddb4-4a00-8a2c-003c301675e2)
+   ## 8. 차량 관리자 새 차량 등록  
+![차량 등록 화면](https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)
+
+## 9. 차량 관리자 목록 조회  
+![차량 목록 화면](https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)
 
 
 
