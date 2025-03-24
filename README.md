@@ -501,8 +501,8 @@ KH 결사대
         AND vehicle_no LIKE CONCAT(#{vehicleNo}, '%')
     </if>
    </select>
-   7. 차량 관리자 목룍열고 차량명 , 차량번호 둘다 입력 후 검색했을때 ![image](https://github.com/user-attachments/assets/c6b703c9-97ae-4481-ad26-9feb42084b02)
-   8. 차량 관리자 새 차량 등록
+   7. 차량 관리자 목룍열고 차량명 , 차량번호 둘다 입력 후 검색했을때 (https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)
+   8. ![차량 등록 화면](https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)
    9.  ![image](https://github.com/user-attachments/assets/c029a91e-ddb4-4a00-8a2c-003c301675e2)
 
 
