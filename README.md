@@ -657,7 +657,9 @@ SQL 입력
 SQL 입력
 ```
 ### 챗봇 채팅 
-![image](https://github.com/user-attachments/assets/ddce3c68-843f-43d7-90bd-545ed2964d1d) 상담사와 유저간 채팅 
+![image](https://github.com/user-attachments/assets/a86d8c98-196a-4d67-8437-fa38d2cd9bc5) ( 사용자 시점 ) 
+![image](https://github.com/user-attachments/assets/f1a9b553-469f-4fda-be5e-722fa1bdf7ef) ( 상담사 시점 )
+
 - Front<br>
 	- [챗봇 채팅 Front](입력)
  - Back<br>
