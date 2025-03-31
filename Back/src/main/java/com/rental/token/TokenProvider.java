@@ -26,12 +26,12 @@ public class TokenProvider {
             .hmacShaKeyFor("ThisIsA256BitSecretKeyForJWTGeneration!".getBytes(StandardCharsets.UTF_8));
 
     // JWT 생성
-    public String generateToken(String userId, String role) {
+    public String generateToken(String userId, String role, Integer userNo) {
         Date expire = new Date(System.currentTimeMillis() + expiredTime);
-
+    
         return Jwts.builder()
                 .setHeader(createHeader())
-                .setClaims(createClaims(userId, role))
+                .setClaims(createClaims(userId, role, userNo))
                 .setSubject(userId)
                 .setExpiration(expire)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -47,10 +47,11 @@ public class TokenProvider {
     }
 
     // JWT 클레임 생성
-    private Map<String, Object> createClaims(String userId, String role) {
+    private Map<String, Object> createClaims(String userId, String role, Integer userNo) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("role", role);
+        claims.put("userNo", userNo);
         return claims;
     }
 
@@ -80,5 +81,9 @@ public class TokenProvider {
     public String getUserId(String token) {
         Claims claims = getClaims(token);
         return claims.get("userId", String.class); // userId 추출
+    }
+    public Integer getUserNo(String token) {
+        Claims claims = getClaims(token);
+        return claims.get("userNo", Integer.class); // userId 추출
     }
 }

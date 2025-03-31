@@ -5,7 +5,7 @@ import UsedCarBoard from '../page/usedCarBoard';
 import ForgotId from '../page/forgotId';
 import ForgotPw from '../page/forgotPw';
 import KakaoCallback from '../components/kakaoCallback';
-
+import AgentChat from '../components/AgentChat';
 import PaymentPage from '../page/PaymentPage';
 import Mypage from '../page/myPage';
 import EditProfile from '../page/EditProfile';
@@ -31,7 +31,7 @@ import AdminShoppingBoard from '../page/AdminShoppingBoard';
 import AdminShoppingUpdate from '../page/AdminShoppingUpdate';
 import AdminShoppingInsert from '../page/AdminShoppingInsert';
 import PaymentSummary from '../page/ShoppingPaymentSummary';
-
+import AgentChatList from '../components/AgentChatList';
 
 import Rental from '../page/Rental';
 import RentalCarDetail from '../page/RentalCarDetail';
@@ -55,7 +55,6 @@ const routes = [
     { path: '/mypage', element: <Mypage /> },
     { path: '/mypage/editProfile', element: <EditProfile /> },
     { path: '/mypage/auth', element: <MypageAuth /> },
-
     { path: '/shopping/product/:productId', element: <ProductDetail /> },
     { path: '/shopping/cart', element: <ShoppingCart /> },
     { path: "/used-cars/detail/:vehicleNo", element: <CarDetail /> },
@@ -79,11 +78,11 @@ const routes = [
     { path: "/cars/:location", element: <CarsByLocation /> },
     { path: "/directdealerlocation", element: <DealerLocationList /> },
     { path: "/carsByLocation/:location", element: <CarsByLocation /> },
-
+    { path: "/AgnetChatList", element: <AgentChatList /> },
+    { path: "/agent-chat", element: <AgentChat /> },
     { path: '/rental', element: <Rental /> },
     { path: '/rental/list/:rentalCarNo', element: <RentalCarDetail /> },
     { path: '/rental/payment', element: <RentalPayment /> },
-
     { path: '/admin/rentalcarlist', element: <AdminRentalCarBoard /> },
     {path: '/admin/rental-cars/add', element: <AdminRentalCarInsert />},
     {path: '/admin/rental-cars', element: <AdminRentalCarBoard />},

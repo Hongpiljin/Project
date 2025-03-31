@@ -29,6 +29,7 @@ const AdminUsedCarAdd = () => {
     modelYear: '',
     price: '',
     color: '',
+    carKm: '',
     dealerLocation: '',
     vehiclePlate: '',
     vehicleNo: '',       // 차량 번호 (차대 번호)
@@ -77,7 +78,17 @@ const AdminUsedCarAdd = () => {
   
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  
+    // 가격 필드일 경우 콤마 추가된 문자열로 저장
+    if (name === 'price' || name === 'carKm') {
+      const rawValue = value.replace(/,/g, ''); // 기존 콤마 제거
+      if (!isNaN(rawValue)) {
+        const formatted = Number(rawValue).toLocaleString(); // 콤마 삽입
+        setFormData(prev => ({ ...prev, [name]: formatted }));
+      }
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   // 파일 업로드 시 서버에 업로드하여 서버가 반환한 상대 URL을 사용합니다.
@@ -155,11 +166,13 @@ const AdminUsedCarAdd = () => {
     // JSON 데이터를 문자열로 변환하여 FormData에 추가
     uploadData.append("carData", JSON.stringify({
       ...formData,
+      price: parseInt(formData.price.replace(/,/g, '')),
+      carKm: parseInt(formData.carKm.replace(/,/g, '')), // 콤마 제거 → 숫자 변환
       description: editor.getHTML() || "",
-      mainImage: selectedMainImage.startsWith("data:image") 
-                 ? selectedMainImage.split(",")[1]  // ✅ Base64 변환 후 전송
-                 : null
-  }));
+      mainImage: selectedMainImage?.startsWith("data:image")
+                  ? selectedMainImage.split(",")[1]
+                  : null
+    }));
     //  이미지 파일 추가
     imageFiles.forEach(file => uploadData.append("images", file));
 
@@ -218,6 +231,8 @@ const AdminUsedCarAdd = () => {
         <option value="대구">대구</option>
         <option value="울산">울산</option>
         </select>
+      <label>주행거리</label>
+      <input type="text" name="carKm" value={formData.carKm} onChange={handleChange} />
 
       <label>차종:</label>
       <select name="vehicleType" value={formData.vehicleType} onChange={handleChange}>  
@@ -247,16 +262,25 @@ const AdminUsedCarAdd = () => {
       <input type="number" name="modelYear" value={formData.modelYear} onChange={handleChange} />
 
       <label>가격:</label>
-      <input type="number" name="price" value={formData.price} onChange={handleChange} />
+      <input type="text" name="price" value={formData.price} onChange={handleChange} />
 
       <label>차대 번호:</label>
       <input type="text" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} />
 
       <label>변속기:</label>
-      <input type="text" name="transmission" value={formData.transmission} onChange={handleChange} />
+      <select name="transmission" value={formData.transmission} onChange={handleChange}>  
+        <option value="">변속기 선택</option>
+        <option value="자동">자동</option>
+        <option value="수동">수동</option>
+      </select>
 
       <label>구동 방식:</label>
-      <input type="text" name="driveType" value={formData.driveType} onChange={handleChange} />
+      <select name="driveType" value={formData.driveType} onChange={handleChange}>  
+        <option value="">구동 방식 선택</option>
+        <option value="4WD">4WD</option>
+        <option value="FWD">FWD</option>
+        <option value="RWD">RWD</option>
+      </select>
 
       <label>차량 설명:</label>
       <h4>*취소시 전 작업, 다시 실행시 앞 작업으로 돌아갑니다*</h4>

@@ -209,28 +209,6 @@
          WHERE VEHICLE_NO      = #{vehicleNo}
     </update>
 
-
-
-    <!-- 특정 이미지 삭제 -->
-    <delete id="deleteImageByUrl">
-        DELETE FROM USED_CAR_IMAGE
-         WHERE IMAGE_DATA = #{imageData}
-    </delete>
-
-    <!-- 대표 이미지 업데이트 (MAIN_IMAGE 컬럼 'Y' 설정) -->
-    <update id="updateMainImageStatusByVehicleNo">
-        UPDATE USED_CAR_IMAGE
-           SET MAIN_IMAGE = 'Y'
-         WHERE VEHICLE_NO = #{vehicleNo}
-           AND IMAGE_DATA = #{imageData}
-    </update>
-
-    <!-- 특정 이미지 전체 삭제 -->
-    <delete id="deleteAllCarImages">
-        DELETE FROM USED_CAR_IMAGE
-         WHERE VEHICLE_NO = #{vehicleNo}
-    </delete>
-
     <!-- USED_CAR 테이블의 MAIN_IMAGE 컬럼 업데이트 (byte[]로 저장) -->
     <update id="updateMainImage">
         UPDATE USED_CAR
@@ -388,5 +366,17 @@
           FROM users
          WHERE USER_ID = #{userId}
     </select>
-
+    
+   <!--ADMIN 중고차목록에서 차량이름,차량번호로 검색 -->
+   <select id="searchUsedCars" resultType="com.rental.dto.UsedCarDTO">
+    SELECT * 
+    FROM used_car
+    WHERE 1=1
+    <if test="vehicleName != null and vehicleName != ''">
+        AND vehicle_name LIKE CONCAT(#{vehicleName}, '%') 
+    </if>
+    <if test="vehicleNo != null and vehicleNo != ''">
+        AND vehicle_no LIKE CONCAT(#{vehicleNo}, '%')
+    </if>
+   </select>
 </mapper>

@@ -2,10 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/authSlice';
-import UsedCarBoard from '../page/usedCarBoard';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Logout  from "../page/logout";
-
+import logoImage from '../img/car-33633_1280.png';
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -36,7 +35,14 @@ const Header = () => {
 
     return (
         <header style={styles.header}>
-            <div style={styles.logo} onClick={() => navigate('/')}></div>
+            {/* ✅ 로고 이미지 */}
+            <img
+                src={logoImage}
+                alt="Main Logo"
+                style={styles.logo}
+                onClick={() => navigate('/')}
+            />
+          
             <nav style={styles.nav}>
                 {/* 메뉴 링크 */}
                 <Link to="/UsedCarBoard" style={styles.menuItem}>차량구매</Link>
@@ -45,6 +51,7 @@ const Header = () => {
                 <Link to="/shopping/cart" style={styles.menuItem}>장바구니</Link>
                 <Link to="/rental" style={styles.menuItem}>렌터카</Link>
                 <Link to="/customer-service" style={styles.menuItem}>고객센터</Link> {/* ✅ 수정된 부분 */}
+                <Link to="/AgnetChatList" style={styles.menuItem}>상담원 전용</Link>
             </nav>
             <div>
                 {isAuthenticated && (
@@ -70,10 +77,11 @@ const styles = {
         padding: '10px 20px',
     },
     logo: {
-        width: '50px',
-        height: '50px',
-        backgroundColor: '#fff',
-    },
+        width: '60px',
+        height: '60px',
+        objectFit: 'contain',
+        cursor: 'pointer',
+      },
     nav: {
         display: 'flex',
         gap: '20px',

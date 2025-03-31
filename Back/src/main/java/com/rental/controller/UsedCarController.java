@@ -5,8 +5,6 @@ import com.rental.dto.UsedCarDTO;
 import com.rental.dto.UsedCarImageDTO;
 import com.rental.dto.UsedCarPaymentDTO; // 사용자가 정의한 결제 DTO (예시)
 import com.rental.dto.UserDTO;
-import com.rental.mapper.MyPageMapper;
-import com.rental.mapper.UsedCarMapper;
 import com.rental.mapper.UserMapper;
 import com.rental.service.UsedCarService;
 import com.rental.service.UserService;
@@ -36,22 +34,14 @@ public class UsedCarController {
     private final UsedCarService usedCarService;
     private final TokenProvider tokenProvider;
     private final UserService userService;
-    private final MyPageMapper mypageMapper;
-    private final UsedCarMapper usedCarMapper; // 추가된 부분
-    private static final String IMAGE_UPLOAD_DIR = "C:/car-images/";
-    private static final String DEFAULT_IMAGE_URL = "/images/usedcar_imageX.png";
-
+    
     public UsedCarController(UsedCarService usedCarService,
             TokenProvider tokenProvider,
             UserService userService,
-            MyPageMapper mypageMapper,
-            UsedCarMapper usedCarMapper,
             UserMapper userMapper) { // 추가된 부분
         this.usedCarService = usedCarService;
         this.tokenProvider = tokenProvider;
         this.userService = userService;
-        this.mypageMapper = mypageMapper;
-        this.usedCarMapper = usedCarMapper;
         this.userMapper = userMapper; // 주입받음
     }
 

@@ -283,4 +283,8 @@ public class UsedCarService {
                 color, dealerLocation, fuelType, transmission, driveType,
                 minKm, maxKm, seatingCapacity);
     }
+
+    public List<UsedCarDTO> searchUsedCars(String vehicleName, String vehicleNo) {
+      return usedCarMapper.searchUsedCars(vehicleName, vehicleNo);
+    }
 }

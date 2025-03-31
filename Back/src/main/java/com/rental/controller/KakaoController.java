@@ -95,7 +95,7 @@ public class KakaoController {
         System.out.println("token 생성 중...");
         System.out.println(kakaoEmail);
         UserDTO user = userservice.findByEmail(kakaoEmail);
-        String token = tokenProvider.generateToken(user.getUserId(), user.getRole());
+        String token = tokenProvider.generateToken(user.getUserId(), user.getRole(),user.getUserNo());
         if (token == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("토큰 생성 중 문제가 발생했습니다.");
         }

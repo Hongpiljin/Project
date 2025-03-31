@@ -89,4 +89,6 @@ public interface UsedCarMapper {
                         @Param("maxKm") Integer maxKm,
                         @Param("seatingCapacity") Integer seatingCapacity);
 
+        List<UsedCarDTO> searchUsedCars(String vehicleName, String vehicleNo);
+
 }

@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> map, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> map, HttpServletResponse response) {
         System.out.println("login...");
 
         String userId = map.get("id");
@@ -62,7 +62,7 @@ public class UserController {
 
         // 토큰 생성
         System.out.println("token 생성 중...");
-        String token = tokenProvider.generateToken(user.getUserId(), user.getRole());
+        String token = tokenProvider.generateToken(user.getUserId(), user.getRole(),user.getUserNo());
         System.out.println("token : " + token);
 
         // 토큰 생성 실패 처리
@@ -82,8 +82,14 @@ public class UserController {
         response.addCookie(cookie);
 
         response.addHeader("user-role", user.getRole());
-
-        return ResponseEntity.ok("로그인 성공");
+        
+        Map<String, Object> result = Map.of(
+            "message", "로그인 성공",
+            "user", user
+        );
+        
+        System.out.println(result);
+        return ResponseEntity.ok(result);
     }
 
      @PostMapping("/logoutUser")

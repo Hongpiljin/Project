@@ -47,23 +47,14 @@ export default function AdminUsedCar() {
 
   // 검색 기능
   const handleSearch = () => {
-    let result = cars;
-
-    // 차량명 검색 (입력값으로 시작하는 차량만)
-    if (searchName.trim()) {
-      result = result.filter((car) =>
-        car.vehicleName.startsWith(searchName.trim())
-      );
-    }
-
-    // 차량번호 검색 (정확한 앞자리 검색)
-    if (searchNo.trim()) {
-      result = result.filter((car) =>
-        String(car.vehicleNo).startsWith(searchNo.trim())
-      );
-    }
-
-    setFilteredCars(result);
+    const params = new URLSearchParams();
+    if (searchName.trim()) params.append("vehicleName", searchName.trim());
+    if (searchNo.trim()) params.append("vehicleNo", searchNo.trim());
+  
+    fetch(`http://localhost:9999/api/admin/used-cars/search?${params.toString()}`)
+      .then((res) => res.json())
+      .then((data) => setFilteredCars(data))
+      .catch((err) => console.error("검색 실패:", err));
   };
 
   // 삭제 기능
