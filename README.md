@@ -501,12 +501,15 @@ KH 결사대
 ![image](https://github.com/user-attachments/assets/0704629b-170d-4081-89e1-21f3299fe8b5)
 - Front<br>
 - [관리자 대시보드 - AdminDashboard.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminDashboard.js)
+  
 ### 차량 관리자 목록 열고 화면
 ![image](https://github.com/user-attachments/assets/cc4c0bff-5b8e-48ec-845b-88ba8d940628)
 - Front<br>
  - [관리자 차량 목록 - AdminUsedCar.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminUsedCar.js)
 - Back<br> 
  - [관리자 차량 목록 컨트롤러 - AdminUsedCarController.java](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/AdminUsedCarController.java)
+
+
 ### 차량 관리자 목록열고 차량명만 넣고 검색했을때 화면
  ![image](https://github.com/user-attachments/assets/36cf74b0-003b-4c3d-b50b-0eaa4aad611f)
 - SQL
@@ -524,28 +527,11 @@ KH 결사대
     </if>
    </select>
    ```
-### 차량 관리자 목록열고 차량명 , 차량번호 둘다 입력 후 검색했을때
- [(https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)](https://github.com/Hongpiljin/Project/blob/main/img/admin_select_car.png)
-- Front<br>
-	- [입력]()
-- Back<br>
-	- [입력]()
-- SQL 
-```
-SQL 입력 
-```
-### 차량 관리자 새 차량 등록  
-[(https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)](https://github.com/Hongpiljin/Project/blob/main/img/admin_add_car.png)
-- Front<br>
-	- [관리자 차량 등록 화면 Front](입력)
-- Back<br>
-	- [관리자 차량 등록 화면 Back](입력)
-- SQL
-```
-SQL 입력 
-```
+
+
 ### 차량 관리자 목록 조회  
-(https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)
+![image](https://github.com/user-attachments/assets/4def3020-abe9-478c-8e8b-f86fcb082026)
+
 - Front<br>
 	- [관리자 차량 목록 조회 Front](입력)
 - Back<br>
@@ -555,6 +541,28 @@ SQL 입력
 SQL 입력
 ```
 
+
+### 차량 관리자 목록열고 차량명 , 차량번호 둘다 입력 후 검색했을때
+ ![image](https://github.com/user-attachments/assets/5e3cfc92-4e68-4865-8f7f-a9c973e86ae0)
+
+- Front<br>
+	- [입력]()
+- Back<br>
+	- [입력]()
+- SQL 
+```
+SQL 입력 
+```
+### 차량 관리자 새 차량 등록  
+![image](https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)
+- Front<br>
+	- [관리자 차량 등록 화면 Front](입력)
+- Back<br>
+	- [관리자 차량 등록 화면 Back](입력)
+- SQL
+```
+SQL 입력 
+```
 
  ### 차량 게시판 화면 
  ![image](https://github.com/user-attachments/assets/42b1f42c-661a-48f4-85d9-d8fb73e5a04c)
