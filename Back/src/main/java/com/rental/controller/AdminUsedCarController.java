@@ -29,6 +29,14 @@ public class AdminUsedCarController {
         List<UsedCarDTO> usedCars = usedCarService.getAllUsedCars();
         return ResponseEntity.ok(usedCars);
     }
+    // ADMIN 차량 검색 
+    @GetMapping("/search")
+    public ResponseEntity<List<UsedCarDTO>> searchUsedCars(
+            @RequestParam(required = false) String vehicleName,
+            @RequestParam(required = false) String vehicleNo) {
+        List<UsedCarDTO> result = usedCarService.searchUsedCars(vehicleName, vehicleNo);
+        return ResponseEntity.ok(result);
+    }
 
     // 차량 삭제 API
     @DeleteMapping("/{vehicleNo}")
