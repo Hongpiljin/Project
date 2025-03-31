@@ -706,10 +706,10 @@ SQL 입력
 ![image](https://github.com/user-attachments/assets/f1a9b553-469f-4fda-be5e-722fa1bdf7ef) ( 상담사 시점 )
 
 - Front<br>
-	- [챗봇 채팅 Front](입력)
- - Back<br>
- 	-[챗봇 채팅 Back](입력)
-   	- SQL
+	-[챗봇 채팅 Front](입력)
+- Back<br>
+	-[챗봇 채팅 Back](입력)
+  	- SQL
 ```
 SQL 입력
 ```
