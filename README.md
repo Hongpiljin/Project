@@ -502,12 +502,13 @@ KH 결사대
 - Front<br>
 - [관리자 대시보드 - AdminDashboard.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminDashboard.js)
   
-### 차량 관리자 목록 열고 화면
+### 관리자 차량 조회
 ![image](https://github.com/user-attachments/assets/cc4c0bff-5b8e-48ec-845b-88ba8d940628)
 - Front<br>
  - [관리자 차량 목록 - AdminUsedCar.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminUsedCar.js)
 - Back<br> 
  - [관리자 차량 목록 컨트롤러 - AdminUsedCarController.java](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/AdminUsedCarController.java)
+
 
 
 ### 차량 관리자 목록열고 차량명만 넣고 검색했을때 화면
@@ -527,49 +528,85 @@ KH 결사대
     </if>
    </select>
    ```
-
-
-### 차량 관리자 목록 조회  
-![image](https://github.com/user-attachments/assets/4def3020-abe9-478c-8e8b-f86fcb082026)
-
-- Front<br>
-	- [관리자 차량 목록 조회 Front](입력)
-- Back<br>
-	- [관리자 차량 목록 조회 Back](입력)
-- SQL
-```
-SQL 입력
-```
-
-
 ### 차량 관리자 목록열고 차량명 , 차량번호 둘다 입력 후 검색했을때
  ![image](https://github.com/user-attachments/assets/5e3cfc92-4e68-4865-8f7f-a9c973e86ae0)
 
-- Front<br>
-	- [입력]()
-- Back<br>
-	- [입력]()
-- SQL 
-```
-SQL 입력 
-```
+
+
+
 ### 차량 관리자 새 차량 등록  
 ![image](https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)
 - Front<br>
-	- [관리자 차량 등록 화면 Front](입력)
+	- [관리자 차량 등록 화면 Front](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/AdminUsedCarAdd.js)
 - Back<br>
-	- [관리자 차량 등록 화면 Back](입력)
+	- [관리자 차량 등록 화면 Back](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/AdminUsedCarController.java)
 - SQL
 ```
-SQL 입력 
+ <insert id="insertUsedCar" parameterType="com.rental.dto.UsedCarDTO">
+        INSERT INTO USED_CAR
+        (
+            VEHICLE_NO,
+            VEHICLE_NAME,
+            DEALER_NO,
+            VEHICLE_TYPE,
+            BRAND,
+            MODEL_YEAR,
+            PRICE,
+            COLOR,
+            DEALER_LOCATION,
+            FUEL_TYPE,
+            TRANSMISSION,
+            DRIVE_TYPE,
+            MAIN_IMAGE,
+            VEHICLE_PLATE,
+            CAR_KM,
+            SEATING_CAPACITY,
+            DESCRIPTION
+        )
+        VALUES
+        (
+            #{vehicleNo, jdbcType=VARCHAR},
+            #{vehicleName, jdbcType=VARCHAR},
+            #{dealerNo, jdbcType=INTEGER},
+            #{vehicleType, jdbcType=VARCHAR},
+            #{brand, jdbcType=VARCHAR},
+            #{modelYear, jdbcType=INTEGER},
+            #{price, jdbcType=INTEGER},
+            #{color, jdbcType=VARCHAR},
+            #{dealerLocation, jdbcType=VARCHAR},
+            #{fuelType, jdbcType=VARCHAR},
+            #{transmission, jdbcType=VARCHAR},
+            #{driveType, jdbcType=VARCHAR},
+            #{mainImage, jdbcType=BLOB},
+            #{vehiclePlate, jdbcType=VARCHAR},
+            #{carKm, jdbcType=INTEGER},
+            #{seatingCapacity, jdbcType=INTEGER},
+            #{description, jdbcType=VARCHAR}
+        )
+    </insert>
+차량 추가 후
+    <update id="updateMainImage">
+        UPDATE USED_CAR
+           SET MAIN_IMAGE = #{mainImage, jdbcType=BLOB}
+         WHERE VEHICLE_NO = #{vehicleNo}
+    </update>
+
+<insert id="insertUsedCarImage" parameterType="com.rental.dto.UsedCarImageDTO">
+    INSERT INTO USED_CAR_IMAGE (IMAGE_ID, VEHICLE_NO, IMAGE_DATA)
+    VALUES (
+      USED_CAR_IMAGE_SEQ.NEXTVAL,
+      #{vehicleNo, jdbcType=VARCHAR},
+      #{imageData, jdbcType=BLOB}
+    )
+</insert>
 ```
 
  ### 차량 게시판 화면 
  ![image](https://github.com/user-attachments/assets/42b1f42c-661a-48f4-85d9-d8fb73e5a04c)
 - Front<br>
-	- [차량 게시판 화면 Front](입력)
+	- [차량 게시판 화면 Front](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/page/usedCarBoard.js)
 - Back<br>
-	- [차량 게시판 화면 Back](입력)
+	- [차량 게시판 화면 Back](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/UsedCarController.java)
 - SQL
 ```
 SQL 입력
