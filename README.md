@@ -706,9 +706,9 @@ SQL 입력
 ![image](https://github.com/user-attachments/assets/f1a9b553-469f-4fda-be5e-722fa1bdf7ef) ( 상담사 시점 )
 
 - Front<br>
-	-[챗봇 채팅 Front](입력)
+	- [챗봇 채팅 Front](입력)
 - Back<br>
-	-[챗봇 채팅 Back](입력)
+	- [챗봇 채팅 Back](입력)
   	- SQL
 ```
 SQL 입력
@@ -716,9 +716,9 @@ SQL 입력
 ### 상담원 전용 채팅 페이지 
 ![image](https://github.com/user-attachments/assets/39940e6f-b48d-40ce-a94c-26d064a5069d) 상담원 전용 채팅목록 페이지 (수락,거절,대기) 
 - Front<br>
-	-[상담원 전용 페이지 Front](입력)
+	- [상담원 전용 페이지 Front](입력)
 - Back<br>
-	-[상담원 전용 페이지 Back](입력)
+	- [상담원 전용 페이지 Back](입력)
   	- SQL
 ```
 SQL 입력
