@@ -525,7 +525,7 @@ KH 결사대
    </select>
    ```
 ### 차량 관리자 목록열고 차량명 , 차량번호 둘다 입력 후 검색했을때
- (https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)
+ [(https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)](https://github.com/Hongpiljin/Project/blob/main/img/admin_select_car.png)
 - Front<br>
 	- [입력]()
 - Back<br>
@@ -535,7 +535,7 @@ KH 결사대
 SQL 입력 
 ```
 ### 차량 관리자 새 차량 등록  
-(https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)
+[(https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_add_car.png)](https://github.com/Hongpiljin/Project/blob/main/img/admin_add_car.png)
 - Front<br>
 	- [관리자 차량 등록 화면 Front](입력)
 - Back<br>
