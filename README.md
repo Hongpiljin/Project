@@ -524,7 +524,7 @@ KH 결사대
     </if>
    </select>
    ```
-### 차량 관리자 목룍열고 차량명 , 차량번호 둘다 입력 후 검색했을때
+### 차량 관리자 목록열고 차량명 , 차량번호 둘다 입력 후 검색했을때
  (https://raw.githubusercontent.com/Hongpiljin/Project/main/img/admin_select_car.png)
 - Front<br>
 	- [입력]()
@@ -656,6 +656,27 @@ SQL 입력
 ```
 SQL 입력
 ```
+### 챗봇 채팅 
+![image](https://github.com/user-attachments/assets/ddce3c68-843f-43d7-90bd-545ed2964d1d) 상담사와 유저간 채팅 
+- Front<br>
+	- [챗봇 채팅 Front](입력)
+ - Back<br>
+ 	-[챗봇 채팅 Back](입력)
+   	- SQL
+```
+SQL 입력
+```
+### 상담원 전용 채팅 페이지 
+![image](https://github.com/user-attachments/assets/39940e6f-b48d-40ce-a94c-26d064a5069d) 상담원 전용 채팅목록 페이지 (수락,거절,대기) 
+- Front<br>
+	-[상담원 전용 페이지 Front](입력)
+- Back<br>
+	-[상담원 전용 페이지 Back](입력)
+  	- SQL
+```
+SQL 입력
+```
+
 
 
 
