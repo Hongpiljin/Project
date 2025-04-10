@@ -1,8 +1,0 @@
-# Back 폴더 내 제외할 디렉토리
-Back/.mvn/
-Back/target/
-
-# Front 폴더 내 제외할 디렉토리
-Front/node_modules/
-Front/public/
-
