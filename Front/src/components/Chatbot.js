@@ -20,12 +20,9 @@ const Chatbot = () => {
   const SERVER_URL = "http://localhost:9999"; // 백엔드 서버 URL
 
   // Redux에서 로그인된 사용자 정보 가져오기
-  // auth state에 { isLoggedIn, userNo, userId, role } 등이 저장되어 있다고 가정
   const { user } = useSelector((state) => state.auth);
-  // 만약 userNo가 없다면, 백엔드에서 userNo가 포함된 사용자 정보를 반환하도록 수정해야 함.
   const USER_NO = user ? user.userNo : null;
 
-  // 디버깅: 로그인된 사용자 정보와 USER_NO 출력
   useEffect(() => {
     console.log("auth state:", user);
     console.log("USER_NO:", USER_NO);
@@ -33,7 +30,8 @@ const Chatbot = () => {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      sendMessage("안녕하세요 ^^ 항상 행복을 전하는 C car 입니다.", true);
+      // 봇 메시지 추가 시 sentAt을 현재 시간으로 설정
+      addMessage("안녕하세요 ^^ 항상 행복을 전하는 C car 입니다.", "bot", new Date().toISOString());
     }
   }, [isOpen]);
 
@@ -41,18 +39,19 @@ const Chatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const addMessage = (text, sender = "bot") => {
-    setMessages((prev) => [...prev, { sender, text }]);
+  // addMessage 함수에 sentAt 추가 (기본값은 현재 시간)
+  const addMessage = (text, sender = "bot", sentAt = new Date().toISOString()) => {
+    setMessages((prev) => [...prev, { sender, text, sentAt }]);
   };
 
   // 상담 메시지 전송 함수
   const sendMessage = async (message, isBot = false) => {
     if (!isBot && message.trim() === "") return;
 
-    // 1) 먼저 사용자/봇 메시지를 화면에 표시 (내가 보낸 메시지는 'user')
+    // 1) 사용자/봇 메시지를 화면에 표시 (사용자 메시지에 현재 시간 포함)
     setMessages((prev) => [
       ...prev,
-      { sender: isBot ? "bot" : "user", text: message },
+      { sender: isBot ? "bot" : "user", text: message, sentAt: new Date().toISOString() },
     ]);
     setInput("");
 
@@ -119,21 +118,23 @@ const Chatbot = () => {
           botResponse = "오류가 발생했습니다. 다시 시도해주세요.";
         }
       }
-      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+      // 봇 응답 메시지에도 백엔드에서 받은 sentAt 필드가 있다면 그대로 사용하고, 그렇지 않으면 현재 시간으로 설정
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: botResponse, sentAt: new Date().toISOString() },
+      ]);
     }
   };
 
   // 상담원 연결: 채팅방 생성 후 WebSocket 연결
   const handleConsultationConnect = async () => {
     try {
-      // 채팅방 생성 API 호출 (로그인된 사용자 번호 전달)
       const response = await axios.post(`${SERVER_URL}/chat/start`, null, {
         params: { userNo: USER_NO, userName: user.name },
       });
       console.log(response);
       const newRoomId = response.data;
       setRoomId(newRoomId);
-      // WebSocket 연결
       const socket = new SockJS(`${SERVER_URL}/ws-stomp`);
       const client = new Client({
         webSocketFactory: () => socket,
@@ -142,25 +143,24 @@ const Chatbot = () => {
           client.subscribe(`/topic/chatroom.${newRoomId}`, (message) => {
             const body = JSON.parse(message.body);
             console.log("수신 메시지:", body);
-            // 내 메시지일 경우 무시
             if (String(body.senderId) === String(USER_NO)) {
               console.log("내 메시지 무시:", body.senderId);
               return;
             }
-            // 상담원(또는 다른 상대)가 보낸 메시지는 'consultant'로 추가
+            // 백엔드로부터 받은 메시지에 sentAt 필드가 있다면 함께 추가
             setMessages((prev) => [
               ...prev,
-              { sender: "consultant", text: body.message },
+              { sender: "consultant", text: body.message, sentAt: body.sentAt },
             ]);
           });
-          addMessage("상담이 시작됩니다. 잠시만 기다려주세요 ~! ");
+          addMessage("상담이 시작됩니다. 잠시만 기다려주세요 ~!", "bot", new Date().toISOString());
         },
       });
       client.activate();
       setStompClient(client);
     } catch (error) {
       console.error("상담원 연결 실패:", error);
-      addMessage("상담원 연결 중 오류가 발생했습니다.", "bot");
+      addMessage("상담원 연결 중 오류가 발생했습니다.", "bot", new Date().toISOString());
     }
   };
 
@@ -173,11 +173,11 @@ const Chatbot = () => {
           stompClient.deactivate();
           setStompClient(null);
         }
-        addMessage("상담이 종료되었습니다.", "bot");
+        addMessage("상담이 종료되었습니다.", "bot", new Date().toISOString());
         setRoomId(null);
       } catch (error) {
         console.error("상담 종료 실패:", error);
-        addMessage("상담 종료 중 오류가 발생했습니다.", "bot");
+        addMessage("상담 종료 중 오류가 발생했습니다.", "bot", new Date().toISOString());
       }
     }
   };
@@ -229,8 +229,8 @@ const Chatbot = () => {
                 key={index}
                 style={{
                   display: "flex",
-                  justifyContent:
-                    msg.sender === "user" ? "flex-end" : "flex-start",
+                  flexDirection: "column",
+                  alignItems: msg.sender === "user" ? "flex-end" : "flex-start",
                   marginBottom: "10px",
                 }}
               >
@@ -251,6 +251,11 @@ const Chatbot = () => {
                 >
                   {msg.text}
                 </div>
+                {msg.sentAt && (
+                  <span style={{ fontSize: "10px", color: "#CCCCCC", marginTop: "2px" }}>
+                    {new Date(msg.sentAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </span>
+                )}
               </div>
             ))}
             <div ref={messagesEndRef} />

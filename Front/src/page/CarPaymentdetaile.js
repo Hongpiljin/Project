@@ -100,85 +100,85 @@ const CarPaymentdetail = () => {
       <div className="car-payment-top">
         {/* 왼쪽 열 */}
         <div className="car-payment-left">
-        <div className="car-info">
-        <div className="car-info">
-  <img src={mainImageUrl} alt="차량 대표" />
-  <p>
-    <strong>차량명:</strong> {carDetails.name}
-  </p>
-  <p>
-    <strong>연식:</strong> {carDetails.year}
-  </p>
-  <p>
-    <strong>주행거리:</strong> {carDetails.mileage}
-  </p>
-  <p>
-    <strong>연료:</strong> {carDetails.fuelType}
-  </p>
-  <p>
-    <strong>차량번호:</strong> {carDetails.vehicleNo}
-  </p>
-  <p>
-    <strong>색상:</strong> {carDetails.color || "정보 없음"}
-  </p>
-  <p>
-    <strong>인승:</strong> {carDetails.seatingCapacity || "정보 없음"}
-  </p>
-  <p>
-    <strong>차종:</strong> {carDetails.vehicleType || "정보 없음"}
-  </p>
-  <p>
-    <strong>변속기:</strong> {carDetails.transmission || "정보 없음"}
-  </p>
-  <p>
-    <strong>구동방식:</strong> {carDetails.driveType || "정보 없음"}
-  </p>
-  <p>
-    <strong>판매점:</strong> {carDetails.dealerLocation || "정보 없음"}
-  </p>
-  <p>
-    <strong>차량 번호:</strong> {carDetails.vehiclePlate || "정보 없음"}
-  </p>
-</div>
-</div>
+          <div className="car-info">
+            <div className="car-info">
+              <img src={mainImageUrl} alt="차량 대표" />
+              <p>
+                <strong>차량명:</strong> {carDetails.name}
+              </p>
+              <p>
+                <strong>연식:</strong> {carDetails.year}
+              </p>
+              <p>
+                <strong>주행거리:</strong> {carDetails.mileage}
+              </p>
+              <p>
+                <strong>연료:</strong> {carDetails.fuelType}
+              </p>
+              <p>
+                <strong>차량번호:</strong> {carDetails.vehicleNo}
+              </p>
+              <p>
+                <strong>색상:</strong> {carDetails.color || "정보 없음"}
+              </p>
+              <p>
+                <strong>인승:</strong> {carDetails.seatingCapacity || "정보 없음"}
+              </p>
+              <p>
+                <strong>차종:</strong> {carDetails.vehicleType || "정보 없음"}
+              </p>
+              <p>
+                <strong>변속기:</strong> {carDetails.transmission || "정보 없음"}
+              </p>
+              <p>
+                <strong>구동방식:</strong> {carDetails.driveType || "정보 없음"}
+              </p>
+              <p>
+                <strong>판매점:</strong> {carDetails.dealerLocation || "정보 없음"}
+              </p>
+              <p>
+                <strong>차량 번호:</strong> {carDetails.vehiclePlate || "정보 없음"}
+              </p>
+            </div>
+          </div>
 
-<div className="buyer-info">
-  <h2>구매자 정보 및 보유 포인트</h2>
-  {loading ? (
-    <p>구매자 정보를 불러오는 중...</p>
-  ) : error ? (
-    <p>{error}</p>
-  ) : userInfo ? (
-    <>
-      <p>
-        <strong>구매자 이름:</strong> {userInfo.name || "정보 없음"}
-      </p>
-      <p>
-        <strong>구매자 이메일:</strong> {userInfo.email || "정보 없음"}
-      </p>
-      <p>
-        <strong>구매자 전화번호:</strong> {userInfo.phone || "정보 없음"}
-      </p>
-      <p>
-        <strong>구매자 ID:</strong> {userInfo.userId || "정보 없음"}
-      </p>
-      <p>
-  <strong>배송받으실 주소:</strong>{" "}
-  {(userInfo.address !== undefined && userInfo.address !== null)
-    ? `${userInfo.address} ${userInfo.addressDetail || ""}`.trim()
-    : "정보 없음"}
-</p>
-      <p>
-        <strong>보유 포인트:</strong>{" "}
-        {userInfo.point !== undefined
-          ? userInfo.point.toLocaleString()
-          : "정보 없음"}원
-      </p>
-    </>
-  ) : (
-    <p>구매자 정보를 불러올 수 없습니다.</p>
-  )}
-</div>
+          <div className="buyer-info">
+            <h2>구매자 정보 및 보유 포인트</h2>
+            {loading ? (
+              <p>구매자 정보를 불러오는 중...</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : userInfo ? (
+              <>
+                <p>
+                  <strong>구매자 이름:</strong> {userInfo.name || "정보 없음"}
+                </p>
+                <p>
+                  <strong>구매자 이메일:</strong> {userInfo.email || "정보 없음"}
+                </p>
+                <p>
+                  <strong>구매자 전화번호:</strong> {userInfo.phone || "정보 없음"}
+                </p>
+                <p>
+                  <strong>구매자 ID:</strong> {userInfo.userId || "정보 없음"}
+                </p>
+                <p>
+                  <strong>배송받으실 주소:</strong>{" "}
+                  {(userInfo.address !== undefined && userInfo.address !== null)
+                    ? `${userInfo.address} ${userInfo.addressDetail || ""}`.trim()
+                    : "정보 없음"}
+                </p>
+                <p>
+                  <strong>보유 포인트:</strong>{" "}
+                  {userInfo.point !== undefined
+                    ? userInfo.point.toLocaleString()
+                    : "정보 없음"}원
+                </p>
+              </>
+            ) : (
+              <p>구매자 정보를 불러올 수 없습니다.</p>
+            )}
+          </div>
         </div>
 
         {/* 오른쪽 열 */}

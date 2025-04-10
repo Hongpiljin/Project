@@ -5,10 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import com.rental.dto.UsedCarDTO;
 import com.rental.service.UsedCarAPIService;
 
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/chatbot/cars") //  챗봇 전용 API 컨트롤러 (URL 오타 수정)
+@RequestMapping("/api/chatbot/cars") // 챗봇 전용 API 컨트롤러 (URL 오타 수정)
 public class UsedCarAPIController {
 
     private final UsedCarAPIService usedCarAPIService;
@@ -27,9 +26,9 @@ public class UsedCarAPIController {
 
     // ✅ 카카오 챗봇에서 특정 차량 상세 조회
     @GetMapping("/vehicle/{vehiclePlate}")
-public UsedCarDTO getCarByVehicleNo(@PathVariable String vehiclePlate) {
-    UsedCarDTO car = usedCarAPIService.getCarByvehiclePlate(vehiclePlate);
-    System.out.println("차량 번호 정보: " + car);
-    return car;
-}
+    public UsedCarDTO getCarByVehicleNo(@PathVariable String vehiclePlate) {
+        UsedCarDTO car = usedCarAPIService.getCarByvehiclePlate(vehiclePlate);
+        System.out.println("차량 번호 정보: " + car);
+        return car;
+    }
 }

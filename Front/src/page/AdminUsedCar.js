@@ -50,7 +50,7 @@ export default function AdminUsedCar() {
     const params = new URLSearchParams();
     if (searchName.trim()) params.append("vehicleName", searchName.trim());
     if (searchNo.trim()) params.append("vehicleNo", searchNo.trim());
-  
+
     fetch(`http://localhost:9999/api/admin/used-cars/search?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => setFilteredCars(data))
@@ -97,7 +97,7 @@ export default function AdminUsedCar() {
         />
         <button onClick={handleSearch}>검색</button>
       </div>
-      
+
       {/* 차량 등록 버튼 추가 */}
       <button onClick={() => navigate('/admin/used-car-add')}>
         🚗 새로운 차량 등록

@@ -34,7 +34,7 @@ public class UsedCarController {
     private final UsedCarService usedCarService;
     private final TokenProvider tokenProvider;
     private final UserService userService;
-    
+
     public UsedCarController(UsedCarService usedCarService,
             TokenProvider tokenProvider,
             UserService userService,
@@ -73,10 +73,10 @@ public class UsedCarController {
             order = "asc";
 
         int offset = (page - 1) * itemsPerPage;
-        System.out.println("offset : " + offset );
+        System.out.println("offset : " + offset);
         List<UsedCarDTO> cars = usedCarService.getFilteredUsedCars(
                 vehicleName, vehicleType, brand, modelYear, minPrice, maxPrice, color, dealerLocation,
-                fuelType, transmission, driveType, minKm, maxKm, seatingCapacity, sortBy, order, offset,itemsPerPage);
+                fuelType, transmission, driveType, minKm, maxKm, seatingCapacity, sortBy, order, offset, itemsPerPage);
         // BLOB → Base64 변환
         for (UsedCarDTO car : cars) {
             car.ensureBase64MainImage();
@@ -98,7 +98,7 @@ public class UsedCarController {
     public UsedCarDTO getCarDetail(@RequestParam String vehicleNo) {
         UsedCarDTO carDTO = usedCarService.getCarByVehicleNo(vehicleNo);
 
-        //  BLOB → Base64 변환
+        // BLOB → Base64 변환
         carDTO.ensureBase64MainImage();
 
         return carDTO;
@@ -112,9 +112,9 @@ public class UsedCarController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             UsedCarDTO usedCarDTO = mapper.readValue(carDataJson, UsedCarDTO.class);
-    
+
             System.out.println("🚀 차량 정보 업데이트 요청: " + usedCarDTO.getVehicleNo());
-    
+
             // 대표 이미지 처리 (Base64 → byte[] 변환)
             if (usedCarDTO.getMainImage() != null && usedCarDTO.getMainImage().length > 0) {
                 String mainImageString = new String(usedCarDTO.getMainImage(), StandardCharsets.UTF_8);
@@ -126,13 +126,13 @@ public class UsedCarController {
                     usedCarDTO.setMainImage(Base64.getDecoder().decode(base64Data));
                 }
             }
-    
+
             // 다중 이미지 업로드 처리 → **새로 업로드한 이미지 파일만 INSERT**
             List<UsedCarImageDTO> newImageDTOList = new ArrayList<>();
             if (images != null && images.length > 0) {
                 for (MultipartFile image : images) {
                     System.out.println(" 처리 중인 이미지 파일: " + image.getOriginalFilename());
-    
+
                     UsedCarImageDTO imageDTO = new UsedCarImageDTO();
                     imageDTO.setVehicleNo(usedCarDTO.getVehicleNo());
                     System.out.println("차량 번호: " + usedCarDTO.getVehicleNo());
@@ -141,7 +141,7 @@ public class UsedCarController {
                     imageDTO.setMainImageStatus("N"); // 기본적으로 대표 이미지 아님
                     newImageDTOList.add(imageDTO);
                 }
-    
+
                 // 첫 번째 새 이미지가 있으면 대표 이미지로 지정
                 if (!newImageDTOList.isEmpty()) {
                     newImageDTOList.get(0).setMainImageStatus("Y");
@@ -150,12 +150,12 @@ public class UsedCarController {
             }
             // 기존 서버 이미지는 재삽입하지 않도록 처리 (이미 삭제 요청은 payload의 deletedImageIds에 있음)
             usedCarDTO.setUsedCarImages(newImageDTOList);
-    
+
             // 서비스 호출 (서비스에서는 deletedImageIds에 있는 이미지 삭제 처리 후 새 이미지 INSERT)
             usedCarService.updateCarDetails(usedCarDTO);
-    
+
             System.out.println(" 차량 정보 업데이트 완료: " + usedCarDTO.getVehicleNo());
-    
+
             return ResponseEntity.ok("차량 정보 수정 완료");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Base64 디코딩 오류: " + e.getMessage());
@@ -165,7 +165,6 @@ public class UsedCarController {
                     .body("수정 중 오류 발생: " + e.getMessage());
         }
     }
-    
 
     private byte[] downloadImageAsBytes(String imageUrl) throws Exception {
         try (InputStream in = new URL(imageUrl).openStream()) {

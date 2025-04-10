@@ -109,18 +109,30 @@ const AgentChat = () => {
     <div style={containerStyle()}>
       <h2>상담원 채팅방</h2>
       <div style={chatBoxStyle()}>
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            style={
-              msg.senderId === CONSULTANT_ID ? consultantMsgStyle() : userMsgStyle()
-            }
-          >
-            <span>
-              {msg.senderId === CONSULTANT_ID ? "나" : "사용자"}: {msg.message}
-            </span>
-          </div>
-        ))}
+      {messages.map((msg, index) => (
+  <div
+    key={index}
+    style={
+      msg.senderId === CONSULTANT_ID ? consultantMsgStyle() : userMsgStyle()
+    }
+  >
+    <div>
+      <span>
+        {msg.senderId === CONSULTANT_ID ? "나" : "사용자"}: {msg.message}
+      </span>
+    </div>
+    {msg.sentAt && (
+      <div>
+        <span style={{ fontSize: "10px", color: "#aaa", marginTop: "2px" }}>
+          {new Date(msg.sentAt).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </span>
+      </div>
+    )}
+  </div>
+))}
         <div ref={messagesEndRef} />
       </div>
       <div style={inputAreaStyle()}>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rental.mapper.AdminRentalCarMapper">
+
+    <select id="findRentalCarById" parameterType="string" resultType="com.rental.dto.RentalCarDTO">
+        SELECT * FROM RENTAL_CAR WHERE RENTAL_CAR_NO = #{rentalCarNo} </select>
+
+    <select id="findAllRentalCars" resultType="com.rental.dto.RentalCarDTO"> SELECT * FROM
+        rental_car </select>
+
+    
+    <!-- ✅ 렌트카 등록 -->
+    <insert id="insertRentalCar">
+    INSERT INTO rental_car (
+        rental_car_no, model, type, location, fuel, transmission,
+        price_per_day, hourly_price, manufacture_year, plate_number,
+        insurance_fee, status, register_date, last_updated
+    ) VALUES (
+        RENTAL_CAR_NO.NEXTVAL, #{model}, #{type}, #{location}, #{fuel}, #{transmission},
+        #{pricePerDay}, #{hourlyPrice}, #{manufactureYear}, #{plateNumber},
+        #{insuranceFee}, #{status}, SYSDATE, SYSDATE
+    )
+</insert>
+<insert id="insertImage">
+    insert into rental_car_image (image_id, rental_car_no, car_image, main_image_status) values (
+        RENTAL_CAR_IMAGE_NO.NEXTVAL, RENTAL_CAR_NO.CURRVAL, #{imageBytes, jdbcType=BLOB}, 'N'
+    )
+</insert>
+
+
+    <!-- ✅ 렌트카 정보 수정 -->
+    <update id="updateRentalCar">
+    UPDATE rental_car 
+    SET model = #{model},
+        price_per_day = #{pricePerDay},
+        hourly_price = #{hourlyPrice},
+        type = #{type},
+        location = #{location},
+        fuel = #{fuel},
+        transmission = #{transmission},
+        last_updated = SYSDATE,  <!-- ✅ `NOW()` → `SYSDATE`로 수정 -->
+        status = #{status},
+        manufacture_year = #{manufactureYear},
+        plate_number = #{plateNumber},
+        insurance_fee = #{insuranceFee}
+    WHERE rental_car_no = #{rentalCarNo}
+</update>
+
+    <!-- ✅ 렌트카 삭제 -->
+    <delete id="deleteRentalCar" parameterType="string"> DELETE FROM rental_car WHERE
+        rental_car_no=#{rentalCarNo} </delete>
+
+
+</mapper>

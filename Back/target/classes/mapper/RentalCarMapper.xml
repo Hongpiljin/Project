@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rental.mapper.RentalCarMapper">
+
+    <!-- ✅ 1️⃣ 모든 렌트카 조회 -->
+    <select id="findAllRentalCars" resultType="com.rental.dto.RentalCarDTO">
+        SELECT RENTAL_CAR_NO, MODEL, TYPE, LOCATION, FUEL, TRANSMISSION, PRICE_PER_DAY, HOURLY_PRICE, STATUS
+        FROM RENTAL_CAR
+    </select>
+
+    <!-- ✅ 2️⃣ 특정 렌트카 번호로 조회 -->
+    <select id="findRentalCarById" parameterType="String" resultType="com.rental.dto.RentalCarDTO">
+        SELECT RENTAL_CAR_NO, MODEL, TYPE, LOCATION, FUEL, TRANSMISSION, PRICE_PER_DAY, HOURLY_PRICE, INSURANCE_FEE
+        FROM RENTAL_CAR 
+        WHERE RENTAL_CAR_NO = #{rentalCarNo}
+    </select>
+
+    <!-- ✅ 3️⃣ 사용자 번호 조회 (userId → userNo) -->
+    <select id="getUserNoByUserId" parameterType="String" resultType="int">
+        SELECT user_no FROM USERS WHERE user_id = #{userId}
+    </select>
+
+    <!-- ✅ 4️⃣ 렌트카 예약 가능 여부 확인 -->
+    <select id="checkCarAvailability" parameterType="map" resultType="boolean">
+        SELECT COUNT(*) = 0
+        FROM RENTAL_RESERVATION
+        WHERE RENTAL_CAR_NO = #{rentalCarNo}
+          AND (START_DATE BETWEEN #{startDate} AND #{endDate}
+               OR END_DATE BETWEEN #{startDate} AND #{endDate})
+    </select>
+
+    <!-- ✅ 5️⃣ 렌트카 예약 정보 저장 -->
+    <insert id="insertReservation" parameterType="com.rental.dto.RentalReservationDTO">
+        INSERT INTO RENTAL_RESERVATION 
+        (RESERVATION_ID, RENTAL_CAR_NO, USER_ID, START_DATE, END_DATE, TOTAL_DAYS, TOTAL_HOURS, TOTAL_PRICE, INSURANCE_INCLUDED, PAYMENT_METHOD, STATUS)
+        VALUES 
+        (RENTAL_RESERVATION_SEQ.NEXTVAL, #{rentalCarNo}, #{userId}, #{startDate}, #{endDate}, #{totalDays}, #{totalHours}, #{totalPrice}, #{insuranceIncluded}, #{paymentMethod}, #{status})
+    </insert>
+
+    <!-- ✅ 6️⃣ 가장 최근 예약 ID 가져오기 -->
+    <select id="getLatestReservationId" resultType="Long">
+        SELECT MAX(RESERVATION_ID) FROM RENTAL_RESERVATION
+    </select>
+
+    <!-- ✅ 7️⃣ 사용자 포인트 조회 -->
+    <select id="getUserPoint" parameterType="int" resultType="int">
+        SELECT POINT FROM USERS WHERE user_no = #{userNo}
+    </select>
+
+    <!-- ✅ 8️⃣ 사용자 포인트 차감 -->
+    <update id="updateUserPoint">
+        UPDATE USERS SET POINT = POINT - #{totalPrice} WHERE user_no = #{userNo}
+    </update>
+
+    <!-- ✅ 9️⃣ 렌트카 결제 정보 저장 -->
+    <insert id="insertRentalPayment" parameterType="com.rental.dto.RentalPaymentDTO">
+        INSERT INTO RENTAL_PAYMENT (
+            PAYMENT_ID, USER_ID, RESERVATION_ID, TOTAL_PRICE, PAYMENT_METHOD, PAYMENT_DATE
+        ) VALUES (
+            RENTAL_PAYMENT_SEQ.NEXTVAL,
+            #{rentalPaymentDTO.userId},
+            #{rentalPaymentDTO.reservationId},
+            #{rentalPaymentDTO.totalPrice},
+            #{rentalPaymentDTO.paymentMethod}, SYSDATE
+        )
+    </insert>
+
+    <!-- ✅ 🔟 마지막 결제 ID 조회 -->
+    <select id="getLatestPaymentId" resultType="long">
+        SELECT MAX(PAYMENT_ID) FROM RENTAL_PAYMENT
+    </select>
+
+    <!-- ✅ 1️⃣1️⃣ 사용자 정보 조회 -->
+    <select id="getUserInfo" parameterType="int" resultType="map">
+        SELECT user_no, user_id, name, email, phone, point
+        FROM USERS
+        WHERE user_no = #{userNo}
+    </select>
+    
+    
+
+</mapper>

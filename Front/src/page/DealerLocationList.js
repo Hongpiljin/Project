@@ -40,7 +40,7 @@ const regionData = [
     image: `${SERVER_URL}/images/대기실6.jpg`,
     phone: "042-xxx-xxxx",
     address: "대전시 ○○구 ○○동 123-4",
-    },
+  },
   {
     region: "서울",
     image: `${SERVER_URL}/images/대기실7.jpg`,

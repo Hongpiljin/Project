@@ -33,7 +33,7 @@ public class ChatBotController {
                 || userMessage.equalsIgnoreCase("인천")
                 || userMessage.equalsIgnoreCase("부산")
                 || userMessage.equalsIgnoreCase("대구")) {
-            
+
             // 지역별 차량 목록 조회
             List<UsedCarDTO> cars = usedCarAPIService.getCarChatBot(userMessage);
             StringBuilder sb = new StringBuilder(userMessage + " 차량 목록:\n");
@@ -42,9 +42,9 @@ public class ChatBotController {
 
             for (UsedCarDTO car : cars) {
                 sb.append("- ").append(car.getVehicleName())
-                  .append(" (").append(car.getBrand()).append(") - ")
-                  .append(currencyFormat.format(car.getPrice())) // 가격 포맷 적용
-                  .append("\n");
+                        .append(" (").append(car.getBrand()).append(") - ")
+                        .append(currencyFormat.format(car.getPrice())) // 가격 포맷 적용
+                        .append("\n");
             }
             botResponse = sb.toString();
         } else if (userMessage.toLowerCase().startsWith("상세조회")) {

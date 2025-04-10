@@ -1,17 +1,18 @@
 package com.rental.dto;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UsedCarImageDTO {
-    private int imageId;         // 이미지 ID
-    private String vehicleNo;    // 차량 번호
-    private byte[] imageData;    // 이미지 데이터
-    private String imageType;    // 이미지 타입 (예: "image/png")
+    private int imageId; // 이미지 ID
+    private String vehicleNo; // 차량 번호
+    private byte[] imageData; // 이미지 데이터
+    private String imageType; // 이미지 타입 (예: "image/png")
     private String mainImageStatus; // 대표 이미지 여부 (Y/N)
 
     // 기본 생성자
-    public UsedCarImageDTO() {}
+    public UsedCarImageDTO() {
+    }
 
     // 매개변수 생성자
     public UsedCarImageDTO(int imageId, String vehicleNo, byte[] imageData, String imageType, String mainImageStatus) {
@@ -71,8 +72,8 @@ public class UsedCarImageDTO {
     // toString() 메서드 (디버깅용)
     @Override
     public String toString() {
-        return "UsedCarImageDTO [imageId=" + imageId + ", vehicleNo=" + vehicleNo + 
-               ", imageData=" + (imageData != null ? "[BINARY DATA]" : "null") + 
-               ", imageType=" + imageType + ", mainImageStatus=" + mainImageStatus + "]";
+        return "UsedCarImageDTO [imageId=" + imageId + ", vehicleNo=" + vehicleNo +
+                ", imageData=" + (imageData != null ? "[BINARY DATA]" : "null") +
+                ", imageType=" + imageType + ", mainImageStatus=" + mainImageStatus + "]";
     }
 }

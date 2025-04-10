@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rental.mapper.RentalReservationMapper">
+
+     <!-- ✅ 예약 정보 저장 -->
+    <insert id="processReservation" parameterType="com.rental.dto.RentalReservationDTO">
+    INSERT INTO RENTAL_RESERVATION
+    (RESERVATION_ID, RENTAL_CAR_NO, USER_ID, START_DATE, END_DATE,  START_TIME, END_TIME, TOTAL_HOURS, INSURANCE_INCLUDED, PAYMENT_METHOD, TOTAL_PRICE, TOTAL_DAYS, STATUS, EXTENDED_HOURS)
+    VALUES 
+    (RENTAL_RESERVATION_SEQ.NEXTVAL, #{rentalCarNo}, #{userId}, #{startDate}, #{endDate}, #{startTime}, #{endTime}, #{totalHours}, #{insuranceIncluded}, #{paymentMethod}, #{totalPrice}, #{totalDays}, #{status}, #{extendedHours})
+</insert>
+
+
+    <!-- ✅ 예약 삭제 -->
+    <delete id="deleteReservation" parameterType="long">
+        DELETE FROM RENTAL_RESERVATION WHERE RESERVATION_ID = #{reservationId}
+    </delete>
+
+
+</mapper>

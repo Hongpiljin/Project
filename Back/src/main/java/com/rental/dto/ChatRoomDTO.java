@@ -4,15 +4,17 @@ import java.time.LocalDateTime;
 
 public class ChatRoomDTO {
 
-    private String roomId;          // 채팅방 ID (UUID)
-    private Integer userNo;         // 사용자 번호
-    private Integer adminNo;        // 상담사 번호 (null 가능)
-    private String status;          // 상태: waiting / active / closed
+    private String roomId; // 채팅방 ID (UUID)
+    private Integer userNo; // 사용자 번호
+    private Integer adminNo; // 상담사 번호 (null 가능)
+    private String status; // 상태: waiting / active / closed
     private LocalDateTime createdAt;
     private LocalDateTime closedAt;
-
+    private String adminName; // 상담사 이름
     // 생성자, getter/setter
-    public ChatRoomDTO() {}
+
+    public ChatRoomDTO() {
+    }
 
     public String getRoomId() {
         return roomId;
@@ -60,5 +62,13 @@ public class ChatRoomDTO {
 
     public void setClosedAt(LocalDateTime closedAt) {
         this.closedAt = closedAt;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
     }
 }

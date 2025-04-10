@@ -2,10 +2,10 @@ package com.rental.dto;
 
 public class DealerDTO {
 
-    private int dealerNo;        // dealer_no
-    private String storeName;    // store_name
-    private String longitude;    // longitude
-    private String latitude;     // latitude
+    private int dealerNo; // dealer_no
+    private String storeName; // store_name
+    private String longitude; // longitude
+    private String latitude; // latitude
 
     // 기본 생성자
     public DealerDTO() {

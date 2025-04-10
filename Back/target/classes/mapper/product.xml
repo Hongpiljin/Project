@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rental.mapper.ProductMapper">
+
+ <resultMap id="ProductResultMap" type="com.rental.dto.ProductDTO">
+     <id property="productId" column="product_id"/>
+    <result property="productPrice" column="product_price"/>
+    <result property="productName" column="product_name"/>
+    <result property="categoryMain" column="category_main"/>
+    <result property="categorySub" column="category_sub"/>
+    <result property="categoryDetail" column="category_detail"/>
+    <result property="productImage" column="product_image" jdbcType="BLOB" javaType="java.io.InputStream"/>
+
+    
+    <!-- ✅ 추가된 필드 -->
+    <result property="productCount" column="product_count"/>
+    <result property="productColor" column="product_color"/>
+    <result property="storeLocation" column="store_location"/>
+</resultMap>
+
+
+
+<resultMap id="ProductDetailResultMap" type="com.rental.dto.ProductDetailDTO">
+    <result property="productId" column="product_id"/>
+    <result property="productCount" column="product_count"/>
+    <result property="productColor" column="product_color"/>
+    <result property="storeLocation" column="store_location"/>
+    <result property="productImage" column="product_image" jdbcType="BLOB"/> <!-- ✅ BLOB 타입 유지 -->
+    <result property="productPrice" column="product_price"/>
+</resultMap>
+
+
+    <!--제품 조회 -->
+   <select id="selectProducts" resultMap="ProductResultMap">
+    SELECT * FROM (
+        SELECT 
+            a.*, ROWNUM rnum 
+        FROM (
+            SELECT 
+                product_id, 
+                product_price, 
+                product_name, 
+                category_main, 
+                category_sub, 
+                category_detail, 
+                product_image
+            FROM product
+            WHERE 
+                (#{categoryMain, jdbcType=VARCHAR} IS NULL OR category_main = #{categoryMain, jdbcType=VARCHAR})
+                AND (#{categorySub, jdbcType=VARCHAR} IS NULL OR category_sub = #{categorySub, jdbcType=VARCHAR})
+                AND (#{categoryDetail, jdbcType=VARCHAR} IS NULL OR category_detail LIKE '%' || #{categoryDetail, jdbcType=VARCHAR} || '%')
+            ORDER BY product_id DESC
+        ) a
+        WHERE ROWNUM &lt;= #{offset} + #{limit}  <!-- ✅ OFFSET + LIMIT 적용 -->
+    ) 
+    WHERE rnum &gt; #{offset}  <!-- ✅ OFFSET 적용 -->
+</select>
+
+
+
+
+<select id="getProductById" resultMap="ProductResultMap">
+    SELECT 
+        product_id, 
+        product_price, 
+        product_name, 
+        category_main, 
+        category_sub, 
+        category_detail, 
+        product_image
+    FROM product
+    WHERE product_id = #{productId}
+</select>
+
+
+     <!-- 리뷰 추가 -->
+    <insert id="insertReview" parameterType="com.rental.dto.ReviewDTO">
+    INSERT INTO review (
+        review_no,
+        product_id,
+        user_no,
+        user_id,       <!-- USER_ID 추가 -->
+        content,
+        created_date,
+        evaluation
+    ) VALUES (
+        review_no_seq.NEXTVAL,  <!-- 시퀀스를 사용 -->
+        #{productId},
+        #{userNo},
+        #{userId},    <!-- USER_ID 값 삽입 -->
+        #{content},
+        CURRENT_TIMESTAMP,
+        #{evaluation}
+    )
+</insert>
+
+<delete id="deleteReview" parameterType="int">
+    DELETE FROM review WHERE review_no = #{reviewNo}
+</delete>
+
+    <resultMap id="ReviewResultMap" type="com.rental.dto.ReviewDTO">
+    <result property="reviewNo" column="review_no"/>
+    <result property="productId" column="product_id"/>
+    <result property="userNo" column="user_no"/>
+    <result property="content" column="content"/>
+    <result property="createdDate" column="created_date"/>
+    <result property="evaluation" column="evaluation"/>
+    <result property="userId" column="user_id"/>
+</resultMap>
+
+<select id="getReviewsByProductId" resultMap="ReviewResultMap">
+    SELECT review_no, product_id, user_no, content, created_date, evaluation, user_id
+    FROM review
+    WHERE product_id = #{productId}
+</select>
+     
+    <!-- ✅ `product` 테이블과 조인하여 가격, 이미지까지 가져오기 -->
+     <select id="getProductDetailsByProductId" resultMap="ProductDetailResultMap">
+    SELECT 
+        pd.product_id, 
+        pd.product_count, 
+        pd.product_color, 
+        pd.store_location,
+        p.product_name,  -- ✅ product_name 추가
+        p.product_image, 
+        p.product_price
+    FROM product_detail pd
+    JOIN product p ON pd.product_id = p.product_id
+    WHERE pd.product_id = #{productId}
+</select>
+
+    <!-- 🔹 결제 번호 시퀀스 조회 -->
+    <select id="getNextPaymentNo" resultType="int">
+        SELECT shopping_payment_seq.NEXTVAL FROM DUAL
+    </select>
+
+   <!-- 🔹 shopping_payment 테이블에 결제 정보 저장 -->
+    <insert id="insertShoppingPayment">
+        INSERT INTO shopping_payment (payment_no, user_no)
+        VALUES (#{paymentNo}, #{userNo})
+    </insert>
+
+<insert id="insertShoppingPaymentDetail">
+        INSERT INTO shopping_payment_detail (
+            product_id, payment_no, user_no, product_name, product_all_price, payment_date, product_count, product_color
+        ) VALUES (
+            #{productId}, #{paymentNo}, #{userNo}, #{productName}, #{productAllPrice}, SYSDATE, #{productCount}, #{productColor}
+        )
+    </insert>
+
+
+
+<update id="updateProductStock">
+    UPDATE product_detail
+    SET product_count = product_count - #{productCount}
+    WHERE product_id = #{productId} 
+      AND product_color = #{productColor}
+      AND product_count <![CDATA[ >= ]]> #{productCount} <!-- ✅ XML에서 비교 연산자 사용 -->
+</update>
+
+
+ <select id="getProductStock" parameterType="map" resultType="int">
+        SELECT product_count
+        FROM product_detail
+        WHERE product_id = #{productId} AND product_color = #{productColor}
+    </select>
+
+<update id="updateUserPoint">
+        UPDATE users
+        SET point = #{remainingPoints}
+        WHERE user_no = #{userNo}
+    </update>
+
+
+<select id="getAllProductsWithDetails" resultType="com.rental.dto.ProductDTO">
+    SELECT 
+        p.product_id, 
+        p.product_name, 
+        COALESCE(p.category_main, '없음') AS category_main,  
+        COALESCE(p.category_sub, '없음') AS category_sub,  
+        COALESCE(p.category_detail, '없음') AS category_detail,  
+        p.product_price, 
+        p.product_image,
+        COALESCE(d.product_count, 0) AS product_count,  -- ✅ 재고 추가
+        COALESCE(d.product_color, '없음') AS product_color,  -- ✅ 색상 추가
+        COALESCE(d.store_location, '없음') AS store_location  -- ✅ 보관 위치 추가
+    FROM product p
+    LEFT JOIN product_detail d ON p.product_id = d.product_id
+</select>
+
+<select id="getImagePathByProductId" resultType="string">
+        SELECT product_image
+        FROM product
+        WHERE product_id = #{productId}
+    </select>
+
+<select id="getProductByIdAndColor" resultType="com.rental.dto.ProductDetailDTO">
+    SELECT 
+        p.product_id, 
+        p.product_name, 
+        COALESCE(CAST(p.category_main AS VARCHAR2(255)), '없음') AS category_main,  
+        COALESCE(CAST(p.category_sub AS VARCHAR2(255)), '없음') AS category_sub,  
+        COALESCE(CAST(p.category_detail AS VARCHAR2(255)), '없음') AS category_detail,  
+        p.product_price, 
+        p.product_image,  <!-- ✅ BLOB 그대로 가져오기 -->
+        COALESCE(d.product_count, 0) AS product_count,  
+        COALESCE(d.product_color, '없음') AS product_color,  
+        COALESCE(d.store_location, '없음') AS store_location  
+    FROM product p
+    LEFT JOIN product_detail d ON p.product_id = d.product_id
+    WHERE p.product_id = #{productId} 
+    AND (d.product_color = #{productColor} OR d.product_color IS NULL) 
+</select>
+
+
+
+<!-- ✅ 상품 추가 (product 테이블) -->
+    <insert id="insertProduct" parameterType="com.rental.dto.ProductDTO" useGeneratedKeys="true" keyProperty="productId">
+    <selectKey keyProperty="productId" resultType="int" order="BEFORE">
+        SELECT product_seq.NEXTVAL FROM DUAL
+    </selectKey>
+
+    INSERT INTO PRODUCT (
+        product_id, product_name, category_main, category_sub, category_detail, 
+        product_price, product_image
+    ) VALUES (
+        #{productId}, #{productName}, #{categoryMain}, #{categorySub}, #{categoryDetail}, 
+        #{productPrice}, #{productImage, jdbcType=BLOB}
+    )
+</insert>
+
+    <!-- ✅ 상품 상세 정보 추가 (product_detail 테이블) -->
+    <insert id="insertProductDetail" parameterType="com.rental.dto.ProductDetailDTO">
+    INSERT INTO PRODUCT_DETAIL (
+        product_id, product_count, product_color, store_location
+    ) VALUES (
+        #{productId}, #{productCount}, #{productColor}, #{storeLocation}
+    )
+</insert>
+
+
+
+<update id="updateProduct" parameterType="com.rental.dto.ProductDTO">
+    UPDATE PRODUCT 
+    SET 
+        product_name = #{productName},
+        category_main = #{categoryMain},
+        category_sub = #{categorySub},
+        category_detail = #{categoryDetail},
+        product_price = #{productPrice}
+        <if test="productImage != null">
+            , product_image = #{productImage, jdbcType=BLOB}
+        </if>
+        <if test="productImage == null">
+            , product_image = NULL
+        </if>
+    WHERE product_id = #{productId}
+</update>
+
+
+<update id="updateProductDetail" parameterType="com.rental.dto.ProductDTO">
+    UPDATE PRODUCT_DETAIL 
+    SET 
+        product_count = #{productCount},
+        product_color = #{productColor},
+        store_locatic = #{storeLocation}
+    WHERE product_id = #{productId}
+</update>
+
+<select id="getExistingProductImage" parameterType="int" resultType="byte[]">
+    SELECT product_image FROM PRODUCT WHERE product_id = #{productId}
+</select>
+
+    <!-- 사용자 포인트 조회 -->
+    <select id="getUserPoint" parameterType="int" resultType="int">
+        SELECT point 
+        FROM users 
+        WHERE user_no = #{userNo}
+    </select>
+
+    <delete id="deleteProductDetail" parameterType="map">
+    DELETE FROM PRODUCT_DETAIL
+    WHERE product_id = #{productId} AND product_color = #{productColor}
+    </delete>
+
+    <select id="countProductDetails" parameterType="long" resultType="int">
+    SELECT COUNT(*) FROM PRODUCT_DETAIL WHERE product_id = #{productId}
+    </select>
+
+    <delete id="deleteProduct" parameterType="long">
+    DELETE FROM PRODUCT WHERE product_id = #{productId}
+    </delete>
+
+  <resultMap id="ProductImageResultMap" type="map">
+    <result property="productImage" column="product_image" jdbcType="BLOB"/>
+</resultMap>
+
+<select id="getProductImageById" parameterType="int" resultType="byte[]">
+    SELECT product_image FROM product WHERE product_id = #{productId}
+</select>
+   
+</mapper>

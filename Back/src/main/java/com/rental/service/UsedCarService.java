@@ -64,17 +64,17 @@ public class UsedCarService {
                 carDTO.getCarKm(),
                 carDTO.getMainImage(),
                 carDTO.getDescription());
-    
+
         // 2. 대표 이미지 업데이트
         if (carDTO.getMainImage() != null && carDTO.getMainImage().length > 0) {
             usedCarMapper.updateMainImage(carDTO.getVehicleNo(), carDTO.getMainImage());
         }
-    
+
         // 3. 삭제할 이미지들 삭제
         if (carDTO.getDeletedImageIds() != null && !carDTO.getDeletedImageIds().isEmpty()) {
             deleteUsedCarImagesByIds(carDTO.getDeletedImageIds());
         }
-    
+
         // 4. 새로 업로드한 이미지 파일만 INSERT (기존 서버 이미지는 제외)
         if (carDTO.getUsedCarImages() != null && !carDTO.getUsedCarImages().isEmpty()) {
             // 예: 각 UsedCarImageDTO 객체에 새 이미지 여부를 판별할 수 있는 플래그(isNew 등)가 있다면
@@ -162,15 +162,15 @@ public class UsedCarService {
             // 1️⃣ 해당 차량의 모든 이미지 삭제
             usedCarImageMapper.deleteImagesByVehicleNo(vehicleNo);
             System.out.println(" 차량 이미지 삭제 완료");
-    
+
             // 2️⃣ MAIN_IMAGE 컬럼 초기화
             usedCarMapper.clearMainImage(vehicleNo);
             System.out.println(" MAIN_IMAGE 필드 초기화 완료");
-    
+
             // 3️⃣ 차량 데이터 삭제
             usedCarMapper.deleteUsedCar(vehicleNo);
             System.out.println(" 차량 삭제 완료");
-    
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(" 차량 삭제 중 오류 발생: " + e.getMessage());
@@ -285,6 +285,6 @@ public class UsedCarService {
     }
 
     public List<UsedCarDTO> searchUsedCars(String vehicleName, String vehicleNo) {
-      return usedCarMapper.searchUsedCars(vehicleName, vehicleNo);
+        return usedCarMapper.searchUsedCars(vehicleName, vehicleNo);
     }
 }

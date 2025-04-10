@@ -70,15 +70,15 @@ const AdminUsedCarAdd = () => {
   <p>✅ 판매자 이름 : [  ]</p>
   <p>✅ 전달하실 말씀 : [  ]</p>
 `
-,
+    ,
   });
 
-  
-  
-  
+
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     // 가격 필드일 경우 콤마 추가된 문자열로 저장
     if (name === 'price' || name === 'carKm') {
       const rawValue = value.replace(/,/g, ''); // 기존 콤마 제거
@@ -133,7 +133,7 @@ const AdminUsedCarAdd = () => {
   const handleMainImageSelect = (imageObj) => {
     setSelectedMainImage(imageObj.url);
   };
-  
+
   const handleDeleteImage = (imageObj) => {
     setPreviewImages(prev => {
       const newImages = prev.filter(img => img.key !== imageObj.key);
@@ -147,10 +147,10 @@ const AdminUsedCarAdd = () => {
       URL.revokeObjectURL(imageObj.url);
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!editor) {
       alert("에디터가 초기화되지 않았습니다.");
       return;
@@ -160,7 +160,7 @@ const AdminUsedCarAdd = () => {
       return;
     }
 
- 
+
     const uploadData = new FormData();
 
     // JSON 데이터를 문자열로 변환하여 FormData에 추가
@@ -170,26 +170,26 @@ const AdminUsedCarAdd = () => {
       carKm: parseInt(formData.carKm.replace(/,/g, '')), // 콤마 제거 → 숫자 변환
       description: editor.getHTML() || "",
       mainImage: selectedMainImage?.startsWith("data:image")
-                  ? selectedMainImage.split(",")[1]
-                  : null
+        ? selectedMainImage.split(",")[1]
+        : null
     }));
     //  이미지 파일 추가
     imageFiles.forEach(file => uploadData.append("images", file));
 
     try {
-        await axios.post(`${SERVER_URL}/api/admin/used-cars/add-car-details`, uploadData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+      await axios.post(`${SERVER_URL}/api/admin/used-cars/add-car-details`, uploadData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-        alert("차량 등록이 완료되었습니다.");
-        window.location.reload();
+      alert("차량 등록이 완료되었습니다.");
+      window.location.reload();
     } catch (error) {
-        console.error("Failed to add car details:", error.response?.data || error.message);
-        alert(`등록 중 오류 발생: ${error.response?.data || error.message}`);
+      console.error("Failed to add car details:", error.response?.data || error.message);
+      alert(`등록 중 오류 발생: ${error.response?.data || error.message}`);
     }
-};
+  };
 
 
   return (
@@ -230,12 +230,12 @@ const AdminUsedCarAdd = () => {
         <option value="대전">대전</option>
         <option value="대구">대구</option>
         <option value="울산">울산</option>
-        </select>
+      </select>
       <label>주행거리</label>
       <input type="text" name="carKm" value={formData.carKm} onChange={handleChange} />
 
       <label>차종:</label>
-      <select name="vehicleType" value={formData.vehicleType} onChange={handleChange}>  
+      <select name="vehicleType" value={formData.vehicleType} onChange={handleChange}>
         <option value="">차종 선택</option>
         <option value="경차">경차</option>
         <option value="소형차">소형차</option>
@@ -244,9 +244,9 @@ const AdminUsedCarAdd = () => {
         <option value="대형차">대형차</option>
         <option value="SUV">SUV</option>
       </select>
-      
+
       <label>연료 타입:</label>
-      <select name="fuelType" value={formData.fuelType} onChange={handleChange}>  
+      <select name="fuelType" value={formData.fuelType} onChange={handleChange}>
         <option value="">연료 선택</option>
         <option value="휘발유">휘발유</option>
         <option value="경유">경유</option>
@@ -268,14 +268,14 @@ const AdminUsedCarAdd = () => {
       <input type="text" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} />
 
       <label>변속기:</label>
-      <select name="transmission" value={formData.transmission} onChange={handleChange}>  
+      <select name="transmission" value={formData.transmission} onChange={handleChange}>
         <option value="">변속기 선택</option>
         <option value="자동">자동</option>
         <option value="수동">수동</option>
       </select>
 
       <label>구동 방식:</label>
-      <select name="driveType" value={formData.driveType} onChange={handleChange}>  
+      <select name="driveType" value={formData.driveType} onChange={handleChange}>
         <option value="">구동 방식 선택</option>
         <option value="4WD">4WD</option>
         <option value="FWD">FWD</option>

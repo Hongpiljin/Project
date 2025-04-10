@@ -5,35 +5,35 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UsedCarDTO {
 
-    private String vehicleName;    
-    private String vehicleNo;      
-    private int dealerNo;          
-    private String vehicleType;    
-    private String brand;          
-    private int modelYear;         
-    private int price;             
-    private String color;          
-    private String dealerLocation; 
-    private String fuelType;       
-    private String transmission;   
-    private String driveType;      
-    private byte[] mainImage;      // ✅ BLOB 데이터 (DB 저장)
+    private String vehicleName;
+    private String vehicleNo;
+    private int dealerNo;
+    private String vehicleType;
+    private String brand;
+    private int modelYear;
+    private int price;
+    private String color;
+    private String dealerLocation;
+    private String fuelType;
+    private String transmission;
+    private String driveType;
+    private byte[] mainImage; // ✅ BLOB 데이터 (DB 저장)
     private String base64MainImage; // ✅ Base64 변환 후 클라이언트에 전달할 필드
-    private String vehiclePlate;   
-    private int carKm;             
-    private int seatingCapacity;   
-    private String description;    
-    private int status;            
+    private String vehiclePlate;
+    private int carKm;
+    private int seatingCapacity;
+    private String description;
+    private int status;
 
-    private List<UsedCarImageDTO> usedCarImages;  
-    private List<String> deletedImages;  
+    private List<UsedCarImageDTO> usedCarImages;
+    private List<String> deletedImages;
 
     // ✅ 기본 생성자
-    public UsedCarDTO() {}
+    public UsedCarDTO() {
+    }
 
     // ✅ Base64 변환 후 저장 (mainImage → base64MainImage)
     public void ensureBase64MainImage() {
@@ -53,7 +53,6 @@ public class UsedCarDTO {
     public void setDeletedImageIds(List<Long> deletedImageIds) {
         this.deletedImageIds = deletedImageIds;
     }
-
 
     // ✅ Getter & Setter
     public byte[] getMainImage() {

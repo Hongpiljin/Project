@@ -14,7 +14,7 @@ public class UsedCarAPIService {
         this.usedCarAPIMapper = usedCarAPIMapper;
     }
 
-    // ✅ 카카오 챗봇에서 지역별 차량 목록 조회
+    //  지역별 차량 목록 조회
     public List<UsedCarDTO> getCarChatBot(String dealerLocation) {
         List<UsedCarDTO> cars = usedCarAPIMapper.findByDealerLocation(dealerLocation);
         System.out.println("차량 목록: " + cars);
@@ -24,9 +24,7 @@ public class UsedCarAPIService {
         return cars;
     }
 
-
-
-    // ✅ (추가) 차량번호로 차량 상세 조회
+    //  차량번호로 차량 상세 조회
     public UsedCarDTO getCarByvehiclePlate(String vehiclePlate) {
         UsedCarDTO car = usedCarAPIMapper.findByVehiclePlate(vehiclePlate);
         System.out.println("차량 번호 정보: " + car);

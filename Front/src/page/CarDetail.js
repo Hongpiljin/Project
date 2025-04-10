@@ -209,9 +209,8 @@ const CarDetail = () => {
                   key={index}
                   src={image}
                   alt={`${car.vehicleName} 추가 이미지 ${index + 1}`}
-                  className={`car-detail-thumbnail-image ${
-                    currentIndex === index ? 'car-detail-selected-thumbnail' : ''
-                  }`}
+                  className={`car-detail-thumbnail-image ${currentIndex === index ? 'car-detail-selected-thumbnail' : ''
+                    }`}
                   onClick={() => {
                     setMainImage(image);
                     setCurrentIndex(index);
@@ -230,7 +229,7 @@ const CarDetail = () => {
               <li><strong>가격:</strong> ₩{car.price.toLocaleString()}</li>
               <li><strong>색상:</strong> {car.color}</li>
               <li>
-              주행거리: {car.carKm ? `${car.carKm.toLocaleString()} km` : "주행거리 없음"}
+                주행거리: {car.carKm ? `${car.carKm.toLocaleString()} km` : "주행거리 없음"}
               </li>
               <li><strong>인승:</strong> {car.seatingCapacity}인승</li>
               <li><strong>차종:</strong> {car.vehicleType}</li>
@@ -242,7 +241,7 @@ const CarDetail = () => {
             </ul>
           </div>
 
-        
+
 
           {/* 차량 설명 섹션 */}
           <div className="car-detail-car-description">

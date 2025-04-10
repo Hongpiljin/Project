@@ -15,14 +15,18 @@ public interface ChatMapper {
 
     void updateRoomStatusToClosed(@Param("roomId") String roomId, @Param("closedAt") LocalDateTime closedAt);
 
-    List<ChatRoomDTO> selectChatRooms(@Param("status") String status);
+    List<ChatRoomDTO> selectChatRooms(
+            @Param("adminName") String adminName,
+            @Param("status") String status);
 
     void updateRoomStatusToActive(@Param("roomId") String roomId,
-    @Param("consultantId") Integer consultantId,
-    @Param("acceptedAt") LocalDateTime acceptedAt);
+            @Param("consultantId") Integer consultantId,
+            @Param("adminName") String adminName,
+            @Param("acceptedAt") LocalDateTime acceptedAt);
 
     void updateRoomStatusToRejected(@Param("roomId") String roomId,
-    @Param("rejectedAt") LocalDateTime rejectedAt);
+            @Param("rejectedAt") LocalDateTime rejectedAt);
 
     void insertChatMessage(ChatMessageDTO message);
+
 }

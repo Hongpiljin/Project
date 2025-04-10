@@ -1,12 +1,13 @@
 package com.rental.dto;
 
 public class UsedCarPaymentDTO {
-    private int paymentNo;  // DB에 저장될 결제번호
-    private int userNo;     // DB에 저장될 사용자 번호
+    private int paymentNo; // DB에 저장될 결제번호
+    private int userNo; // DB에 저장될 사용자 번호
     private String vehicleNo; // 클라이언트에서 넘어오는 차량 번호 (결제 상세용)
-    private int point;        // 결제할 포인트 (사용자 보유 포인트와 비교)
-    
-    public UsedCarPaymentDTO() {}
+    private int point; // 결제할 포인트 (사용자 보유 포인트와 비교)
+
+    public UsedCarPaymentDTO() {
+    }
 
     public UsedCarPaymentDTO(int userNo, int paymentNo, String vehicleNo, int point) {
         this.userNo = userNo;
