@@ -34,7 +34,9 @@ KH 결사대
 - 사용자에게 간편한 중고차구매,차량용품구매,렌트카 활용을 서비스
 
 >### 목표 
-- ?? 
+- 다양한 자동차 관련 서비스를 통합한 웹 플랫폼을 구축함으로써, 사용자에게 편리하고 직관적인 차량 쇼핑 경험을 제공하고자 했습니다.
+중고차 구매, 렌트카 예약, 차량 용품 구매를 하나의 사이트에서 해결할 수 있도록 설계하였고, 실제 서비스에 가까운 기능 구현을 통해 실무 감각을 키우는 것을 목표로 삼았습니다.
+특히 저는 중고차 판매 페이지의 전반적인 기능을 담당하며, 차량 필터링, 상세 조회, 결제 및 관리자 관리 기능, 사용자와 상담사의 채팅까지 구현하며 프로젝트의 핵심 흐름을 이끌었습니다.
 
 >## 2. 개발환경
 >### 🔹 사용 언어
@@ -58,25 +60,32 @@ KH 결사대
 - Oracle JDBC
 - JWT
 - Tomcat
+- Spring WebSocket (STOMP,SockJS)
 ### 🔹 사용 API
 - 카카오맵 API (지도 및 위치 정보 제공)
 ## 3. 주요 기능
 ### 🔹 **홍필진**
-- 중고차 페이지 (상품 목록 & 필터링 & 페이징)
-- 중고차 상세 페이지 (상품 상세 정보 표시, 차량 설명 에디터, 결제 기능)
-- 결제 기능 (차량 결제 완료 시 숨김 처리, 트랜잭션 관리, 결제 내역 저장)
-- 중고차 관리자 (데이터 삽입, 수정, 삭제, 조회, 검색)
-- 전국 직영점 (각 매장 지역별 차량 조회, 지도 API 활용)
-- ChatBot ( 지역별 차량 조회, 차량 상세정보 조회)
+- 중고차 페이지: 상품 목록, 상태 필터링, 페이징 기능 구현
+  
+- 중고차 상세 페이지: 차량 상세 정보 출력, 차량 설명용 에디터, 결제 기능 포함
+  
+- 결제 기능: 결제 완료 시 상품 숨김 처리, 트랜잭션 관리, 결제 내역 저장
+  
+- 중고차 관리자 페이지: 차량 데이터 삽입·수정·삭제·조회, 키워드 검색
+  
+- 전국 직영점 기능: 지역별 차량 조회 및 카카오 지도 API 활용
+  
+- ChatBot 기능: 지역 기반 차량 조회, 차량 상세정보 조회 지원
+  
+- 상담 채팅 기능: 실시간 사용자-상담사 채팅, 채팅방 목록 조회 (상태: 수락, 거절, 대기), 상태별 필터링, 페이징 처리, 상담 처리 관리자 이름으로 검색 가능
+  
 ## 🔍 설계의 주안점
-- 카카오 로그인을 포함한 간편 로그인 기능 지원
-- JWT 기반의 인증 및 인가 시스템 적용
 - 프론트엔드에서 React를 활용하여 유지보수가 용이한 구조로 개발
 - Base64를 사용한 이미지 저장 방식 적용
-- LocalStorage를 이용한 장바구니 데이터 저장
 - 포인트 충전을 통한 사이트 내 구매 편의 제공
 - TipTap Editor 활용
 - Kakao Map API를 사용한 위치 정보 제공
+- WebSocket 기반 실시간 채팅 서비스 구현
 
 >## 4. 화면 및 코드 리뷰
 ### 메인화면
@@ -335,42 +344,148 @@ SQL문 위와 같음
  ### 챗봇 
  ![image](https://github.com/user-attachments/assets/450a3b8c-e71b-40ea-836a-29737e1e3fb1)특정지역 차량목록 출력
 - Front<br>
-	- [챗봇 특정지역 차량목록 출력 Front](입력)
+	- [챗봇 특정지역 차량목록 출력 Front - Chatbot.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/components/Chatbot.js)
 - Back<br>
-	- [챗봇 특정지역 차량목록 출력 Back](입력)
+	- [챗봇 특정지역 차량목록 출력 Back  - ChatBotController.java /  @PostMapping("/webhook")](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/ChatBotController.java)
 - SQL
 ```
-SQL 입력
+    <!--  지역별 차량 목록 조회 -->
+    <select id="findByDealerLocation" parameterType="string" resultType="com.rental.dto.UsedCarDTO">
+        SELECT 
+            vehicle_no AS vehicleNo,
+            vehicle_name AS vehicleName,
+            dealer_no AS dealerNo,
+            vehicle_type AS vehicleType,
+            brand,
+            model_year AS modelYear,
+            price,
+            color,
+            dealer_location AS dealerLocation,
+            fuel_type AS fuelType,
+            transmission,
+            drive_type AS driveType,
+            main_image AS mainImage,
+            vehicle_plate AS vehiclePlate,
+            car_km AS carKm,
+            seating_capacity AS seatingCapacity,
+            description,
+            status
+        FROM used_car
+        WHERE dealer_location = #{dealerLocation}
+    </select>
 ```
  ### 챗봇 
  ![image](https://github.com/user-attachments/assets/cfee6c49-e196-4df4-8d09-4da3084f3257)특정 차량번호 정보 출력
 - Front<br>
-	- [챗봇 특정 차량번호 정보 출력 Front](입력)
+	- [챗봇 특정 차량번호 정보 출력 Front - Chatbot.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/components/Chatbot.js)
 - Back<br>
-	- [챗봇 특정 차량번호 정보 출력 Back](입력)
+	- [챗봇 특정 차량번호 정보 출력 Back  - Back  - ChatBotController.java /  @PostMapping("/webhook")](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/ChatBotController.java)
 	- SQL
 ```
-SQL 입력
+<!-- 차량번호(vehicleNo)로 상세 조회 -->
+<select id="findByVehiclePlate" parameterType="java.lang.String" resultType="com.rental.dto.UsedCarDTO">
+    SELECT 
+        vehicle_no AS vehicleNo,
+        vehicle_name AS vehicleName,
+        dealer_no AS dealerNo,
+        vehicle_type AS vehicleType,
+        brand,
+        model_year AS modelYear,
+        price,
+        color,
+        dealer_location AS dealerLocation,
+        fuel_type AS fuelType,
+        transmission,
+        drive_type AS driveType,
+        main_image AS mainImage,
+        vehicle_plate AS vehiclePlate,
+        car_km AS carKm,
+        seating_capacity AS seatingCapacity,
+        description,
+        status
+    FROM used_car
+    WHERE vehicle_plate = #{vehiclePlate}
+</select>
 ```
 ### 챗봇 채팅 
 ![image](https://github.com/user-attachments/assets/4640d234-0ed4-4483-bf4d-26ec1766fbea)( 사용자 시점 ) 
 ![image](https://github.com/user-attachments/assets/88d3d371-3eca-41f4-b163-8c2990a5bca3)( 상담사 시점 )
 
 - Front<br>
-	- [챗봇 채팅 Front](입력)
+	- [챗봇 채팅 Front - Chatbot.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/components/Chatbot.js)
 - Back<br>
-	- [챗봇 채팅 Back](입력)
+	- [챗봇 채팅 Back  - ChatController.java /  @MessageMapping("/chat.sendMessage")](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/ChatController.java)
+- WebSocket<br>
+	- [ WebSocket - WebSocketConfig.java](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/config/WebSocketConfig.java)
   	- SQL
 ```
-SQL 입력
+  <!-- 채팅방 생성: 새로운 채팅방 정보를 DB에 삽입 -->
+  <insert id="insertChatRoom" parameterType="com.rental.dto.ChatRoomDTO">
+   INSERT INTO chat_room (room_id, user_no, admin_no, status, created_at)
+   VALUES (#{roomId}, #{userNo}, #{adminNo, jdbcType=INTEGER}, #{status}, #{createdAt})
+  </insert>
+
+
+ <!-- 채팅 메시지 저장: 전달받은 메시지를 CHAT_MESSAGE 테이블에 삽입 -->
+ <insert id="insertChatMessage" parameterType="com.rental.dto.ChatMessageDTO">
+  INSERT INTO CHAT_MESSAGE (message_id, room_id, sender_id, message, sent_at)
+  VALUES (CHAT_MESSAGE_SEQ.NEXTVAL, #{roomId}, #{senderId}, #{message}, #{sentAt})
+</insert>
+
+  <!-- 채팅방 종료: 채팅방 상태를 'closed'로 변경하고 종료 시간을 기록 -->
+  <update id="updateRoomStatusToClosed">
+    UPDATE chat_room
+    SET status = 'closed',
+        closed_at = #{closedAt}
+    WHERE room_id = #{roomId}
+  </update>
+
 ```
 ### 상담원 전용 채팅 페이지 
-![image](https://github.com/user-attachments/assets/39940e6f-b48d-40ce-a94c-26d064a5069d) 상담원 전용 채팅목록 페이지 (수락,거절,대기) 
+![image](https://github.com/user-attachments/assets/c2f496c6-e182-40d3-a110-8d10b1c69c00)상담원 전용 채팅목록 페이지 (수락,거절,대기중) 
 - Front<br>
-	- [상담원 전용 페이지 Front](입력)
+	- [상담원 전용 페이지 Front - AgentChatList.js](https://github.com/Hongpiljin/Project/blob/KH_final_project/Front/src/components/AgentChatList.js)
 - Back<br>
-	- [상담원 전용 페이지 Back](입력)
+	- [상담원 전용 페이지 Back  - ChatController.java / chat/accept , chat/reject , chat/close , chat/select api 사용](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/ChatController.java)
   	- SQL
 ```
-SQL 입력
+  <!-- 채팅방 수락: 상담원이 배정되면서 채팅방 상태를 'active'로 변경 -->
+<update id="updateRoomStatusToActive" parameterType="map">
+    UPDATE CHAT_ROOM
+    SET 
+        admin_no = #{consultantId},
+        admin_name = #{adminName},
+        status = 'active',
+        accepted_at = #{acceptedAt}
+    WHERE room_id = #{roomId}
+</update>
+
+  <!-- 채팅방 거절: 채팅방 상태를 'rejected'로 변경하며 종료 시간을 기록 -->
+  <update id="updateRoomStatusToRejected">
+    UPDATE chat_room
+    SET status = 'rejected',
+        closed_at = #{rejectedAt}
+    WHERE room_id = #{roomId}
+  </update>
+
+<!--  상담원 리스트 : adminName , status 필터링 -->
+<select id="selectChatRooms" resultType="com.rental.dto.ChatRoomDTO">
+  SELECT room_id, user_no, admin_no, status, created_at, closed_at, admin_name
+  FROM chat_room
+  <where>
+    <if test="adminName != null and adminName != ''">
+      admin_name LIKE '%' || #{adminName} || '%'
+    </if>
+    <if test="status != null and status != ''">
+      <if test="adminName != null and adminName != ''">AND</if>
+      status = #{status}
+    </if>
+  </where>
+  ORDER BY created_at DESC
+</select>
 ```
+>## 5. 프로젝트 소감 및 향후 계획
+파이널 프로젝트를 마무리하며, 팀원들과 함께 하나의 완성된 웹 서비스를 구현했다는 점에서 큰 성취감을 느꼈습니다. 처음에는 주제 선정과 기능 구성부터 많은 고민이 있었지만, 이전 프로젝트에서 경험한 필터링, 페이징, 검색 기능 등을 토대로 보다 수월하게 진행할 수 있었습니다.
+이번 프로젝트에서는 단순히 기능 구현에 그치지 않고, 실제 사용자 경험과 개발자 입장에서의 고민을 동시에 고려하여 개발하려고 노력했습니다. 예를 들어, 중고차 이미지 저장 방식에 대해 처음에는 AWS 서버를 이용한 외부 저장을 검토했지만, 비용 문제와 관리 이슈를 고려해 Base64 방식으로 DB에 BLOB 형태로 저장하는 방식으로 구조를 변경하였습니다. 이 과정을 통해 기술 선택에 있어 실용성과 비용 효율성까지 함께 고려하는 중요한 경험을 할 수 있었습니다.
+또한, WebSocket을 활용한 실시간 1:1 상담 채팅 기능을 직접 구현하며 서버와 클라이언트 간 실시간 통신 구조에 대한 이해를 높일 수 있었습니다. 설정과 테스트 과정에서 많은 시행착오를 겪었지만, 그만큼 큰 성장을 이뤘다고 생각합니다.
+이러한 경험을 바탕으로, 이제는 단순히 ‘작동하는 프로그램’을 넘어서 ‘사용자 중심의 서비스’를 설계하고, 다양한 기술 스택을 적재적소에 적용하는 개발자가 되고자 합니다. 앞으로도 꾸준히 역량을 키우며, 실무에서도 적극적으로 문제를 해결하고 개선점을 찾아내는 개발자가 되겠습니다.
