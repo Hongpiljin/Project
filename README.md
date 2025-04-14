@@ -201,7 +201,81 @@ KH 결사대
 	- [차량 게시판 화면 Back  - UsedCarController.java](https://github.com/Hongpiljin/Project/blob/KH_final_project/Back/src/main/java/com/rental/controller/UsedCarController.java)
 - SQL
 ```
-SQL 입력
+<select id="getFilteredUsedCars" parameterType="map" resultMap="UsedCarResultMap">
+    SELECT UC.*, UCI.IMAGE_ID, UCI.IMAGE_DATA, UCI.MAIN_IMAGE_STATUS
+    FROM USED_CAR UC
+    LEFT JOIN USED_CAR_IMAGE UCI ON UC.VEHICLE_NO = UCI.VEHICLE_NO
+    WHERE UC.STATUS = 0
+    AND UC.VEHICLE_NO IN (
+        SELECT vehicle_no
+        FROM (
+            SELECT DISTINCT VEHICLE_NO, ROW_NUMBER() OVER (
+                ORDER BY 
+                CASE 
+                    WHEN #{sortBy} = 'car_km' THEN CAR_KM
+                    WHEN #{sortBy} = 'price' THEN PRICE
+                    WHEN #{sortBy} = 'model_year' THEN MODEL_YEAR
+                END 
+                <choose>
+                    <when test="order == 'asc'">ASC</when>
+                    <otherwise>DESC</otherwise>
+                </choose>
+            ) AS rn
+            FROM USED_CAR
+            WHERE STATUS = 0
+            AND 1 = 1
+            <if test="vehicleName != null and vehicleName != ''"> AND LOWER(VEHICLE_NAME) LIKE LOWER(#{vehicleName}) || '%' </if>
+            <if test="vehicleType != null and vehicleType != ''"> AND VEHICLE_TYPE = #{vehicleType} </if>
+            <if test="brand != null and brand != ''"> AND BRAND = #{brand} </if>
+            <if test="modelYear != null"> AND MODEL_YEAR = #{modelYear} </if>
+            <if test="minPrice != null"> AND PRICE &gt;= #{minPrice} </if>
+            <if test="maxPrice != null"> AND PRICE &lt;= #{maxPrice} </if>
+            <if test="color != null and color != ''"> AND COLOR = #{color} </if>
+            <if test="dealerLocation != null and dealerLocation != ''"> AND DEALER_LOCATION = #{dealerLocation} </if>
+            <if test="fuelType != null and fuelType.trim() != ''"> AND LOWER(FUEL_TYPE) = LOWER(#{fuelType}) </if>
+            <if test="transmission != null and transmission != ''"> AND TRANSMISSION = #{transmission} </if>
+            <if test="driveType != null and driveType != ''"> AND DRIVE_TYPE = #{driveType} </if>
+            <if test="minKm != null"> AND CAR_KM &gt;= #{minKm} </if>
+            <if test="maxKm != null"> AND CAR_KM &lt;= #{maxKm} </if>
+            <if test="seatingCapacity != null"> AND SEATING_CAPACITY = #{seatingCapacity} </if>
+        )
+        WHERE rn > #{offset} AND rn <= #{offset} + #{itemsPerPage}
+    )
+    ORDER BY 
+    CASE 
+        WHEN #{sortBy} = 'car_km' THEN UC.CAR_KM
+        WHEN #{sortBy} = 'price' THEN UC.PRICE
+        WHEN #{sortBy} = 'model_year' THEN UC.MODEL_YEAR
+    END 
+    <choose>
+        <when test="order == 'asc'">ASC</when>
+        <otherwise>DESC</otherwise>
+    </choose>,
+    UCI.IMAGE_ID ASC
+</select>
+
+
+<select id="getFilteredUsedCarsCount" parameterType="map" resultType="int">
+    SELECT COUNT(DISTINCT UC.VEHICLE_NO)
+    FROM USED_CAR UC
+    LEFT JOIN USED_CAR_IMAGE UCI ON UC.VEHICLE_NO = UCI.VEHICLE_NO
+    WHERE UC.STATUS = 0
+    AND 1=1
+    <if test="vehicleName != null and vehicleName != ''"> AND LOWER(UC.VEHICLE_NAME) LIKE LOWER(#{vehicleName}) || '%' </if>
+    <if test="vehicleType != null and vehicleType != ''"> AND UC.VEHICLE_TYPE = #{vehicleType} </if>
+    <if test="brand != null and brand != ''"> AND UC.BRAND = #{brand} </if>
+    <if test="modelYear != null"> AND UC.MODEL_YEAR = #{modelYear} </if>
+    <if test="minPrice != null"> AND UC.PRICE &gt;= #{minPrice} </if>
+    <if test="maxPrice != null"> AND UC.PRICE &lt;= #{maxPrice} </if>
+    <if test="color != null and color != ''"> AND UC.COLOR = #{color} </if>
+    <if test="dealerLocation != null and dealerLocation != ''"> AND UC.DEALER_LOCATION = #{dealerLocation} </if>
+    <if test="fuelType != null and fuelType.trim() != ''"> AND LOWER(UC.FUEL_TYPE) = LOWER(#{fuelType}) </if>
+    <if test="transmission != null and transmission != ''"> AND UC.TRANSMISSION = #{transmission} </if>
+    <if test="driveType != null and driveType != ''"> AND UC.DRIVE_TYPE = #{driveType} </if>
+    <if test="minKm != null"> AND UC.CAR_KM &gt;= #{minKm} </if>
+    <if test="maxKm != null"> AND UC.CAR_KM &lt;= #{maxKm} </if>
+    <if test="seatingCapacity != null"> AND UC.SEATING_CAPACITY = #{seatingCapacity} </if>
+</select>
 ```
  ### 차량 게시판에서 특정차량 검색 필터 기본값 적은 주행거리순 !
 ![image](https://github.com/user-attachments/assets/6c0aaa17-0072-4bdf-af6f-5aa8cc827dff)
